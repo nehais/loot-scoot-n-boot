@@ -19,14 +19,16 @@ class Player{
         this.gameScreen.appendChild(this.element);
     }
 
-    move(){
-        this.left     += this.directionX;
-        this.top      += this.directionY;
+    move(){        
+        //Move the player ship position values within the screen        
+        let newLeft = this.left + this.directionX;
+        let newTop  = this.top  + this.directionY;
 
-        if ((this.left > 350) || (this.left < 50)){
-            return;
-        } else if ((this.top > 495) || (this.left < 0)){
-            return;
+        if ((newLeft <= 550) && (newLeft >= 0)){
+            this.left = newLeft;
+        }
+        if ((newTop <= 750) && (newTop >= 0)){
+            this.top = newTop;
         }
         this.updatePosition();
     }
@@ -37,10 +39,19 @@ class Player{
     }
 
     didCollide(obstacle){
-        if(obstacle){
-            return true;
-        }
+        const playerRect    = this.element.getBoundingClientRect();
+        const obstacleRect  = obstacle.element.getBoundingClientRect();
 
-        return false;
+        //Check if there is collision
+        if (
+            playerRect.left < obstacleRect.right &&
+            playerRect.right > obstacleRect.left &&
+            playerRect.top < obstacleRect.bottom &&
+            playerRect.bottom > obstacleRect.top
+          ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

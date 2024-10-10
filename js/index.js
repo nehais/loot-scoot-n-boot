@@ -1,37 +1,59 @@
 window.onload = function () {
-    //const startButton   = document.getElementById("start-button");
-    //const restartButton = document.getElementById("restart-button");
-    let raceGame;
+    const startButton   = document.getElementById("start-button");
+    const restartButton = document.getElementById("restart-button");
+    let scootGame;
   
-    startGame();
-
-    /*startButton.addEventListener("click", function () {
+    //Start the game on click of start button
+    startButton.addEventListener("click", function () {
       startGame();
-    });*/
+    });
   
     function startGame() {
-      console.log("start game");
-      raceGame = new Game();
-      raceGame.start();
+      console.log("game started");
+      scootGame = new Game();
+      scootGame.start();
     }
   
     //Check if arrow keys were pressed
-    //document.body.onkeydown = keyPressed;
-    
-    /*document.body.addEventListener("keydown", keyPressed);
-    function keyPressed(e) {
+    document.body.addEventListener("keydown", keyDownPressed);
+    function keyDownPressed(e) {
+      console.log("keydown pressed");
   
       if (e.keyCode == '38') {// up arrow
-        raceGame.player.directionY -= 1;
+        scootGame.player.directionY -= 0.01;
       }
       else if (e.keyCode == '40') {// down arrow
-        raceGame.player.directionY += 1;
+        scootGame.player.directionY += 0.01;
       }
       else if (e.keyCode == '37') {// left arrow
-        raceGame.player.directionX -= 1;
+        scootGame.player.directionX -= 0.01;
       }
       else if (e.keyCode == '39') {// right arrow
-        raceGame.player.directionX += 1;
+        scootGame.player.directionX += 0.01;
       }
-    }*/
+    }
+    
+    document.body.addEventListener("keyup", keyUpPressed);
+    function keyUpPressed(e) {
+      console.log("keyup pressed");
+  
+      if (e.keyCode == '38') {// up arrow
+        scootGame.player.directionY = 0;
+      }
+      else if (e.keyCode == '40') {// down arrow
+        scootGame.player.directionY = 0;
+      }
+      else if (e.keyCode == '37') {// left arrow
+        scootGame.player.directionX = 0;
+      }
+      else if (e.keyCode == '39') {// right arrow
+        scootGame.player.directionX = 0;
+      }
+    }
+
+
+    //Reload the game on click of restart button
+    restartButton.addEventListener("click", function () {
+      location.reload();
+    });
   };

@@ -5,23 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
     <title>Loot Scoot & Boot</title>
+    <!-- Game Logo-->
+     <link rel="icon" href="./images/game-icon.png" type="image/x-icon">
 </head>
+
 <body>
     <main>        
-      <div id="game-intro"></div>
+        <!-- #game-intro is visible on Game Load-->
+        <div id="game-intro">
+            <img src="./images/game-intro.jpg" alt="" id="intro-img">
+            <img src="./images/game-logo.png" alt="" id="logo-img">
 
+            <button id="start-button" class="game-buttons">Start</button> 
+        </div>
+
+        <!-- #game-container is initially hidden using CSS style display: none -->
         <div id="game-container">
-            <div>
-                <h2>Stats</h2>
-                <p>Cargos: <span id="score">0</span></p>
-                <!--p>Missiles: <span id="missile">3</span></p-->
+            <div>        
+                <div class="sun">
+                    <div class="dot"></div>
+                </div>
+                <div> 
+                    <h2>Stats</h2>
+                    <p>Total Cargos Weight: <span id="score">0</span></p>
+                    <p>Missiles Left: <span id="missiles">0</span></p>
+                </div>
             </div>
-            <!-- #game-screen is initially hidden using CSS style display: none -->
             <div id="game-screen"></div>
         </div>
       
-        <div id="game-end"></div>
+        <!-- #game-container is initially hidden using CSS style display: none -->
+        <div id="game-end">
+            <button id="restart-button" class="game-buttons">Restart</button>
+        </div>
     </main>
+
+    <script type="text/javascript" src="js/cargo.js"></script>
+    <script type="text/javascript" src="js/pirate.js"></script>
     <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="js/index.js"></script>

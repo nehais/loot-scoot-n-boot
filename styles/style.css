@@ -1,23 +1,68 @@
+body{
+  background-color: #92e5e8;
+  /*background-image: url(../images/game-back.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;*/
+}
 
 #game-intro {
-    display: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-  
+ 
+#intro-img{
+  position: relative;
+  border-radius: 10px;
+}
+
+#logo-img{
+  position: absolute;
+  top: 20vh;
+  left: 100vh;
+  transform: scale(1.5);
+  transition: all 5s;
+}
+
+.game-buttons:hover{
+  animation: shake 0.2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  50% { transform: translate(1px, -1px) rotate(1deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.game-buttons{
+  background-color: #ff302a;
+  border-radius: 10px;
+  color: #fffac2;
+  font-size: 1.8em;
+  margin-top: 50px;
+  padding: 10px 30px;
+}
+
 #game-container {
-    display: flex;
-    width: 100vw;
-    padding: 20px 0px;
-    justify-content: center;
+  display: none;
+  padding: 20px 0px;
+  justify-content: center;
+  background-image: url(../images/game-back.jpg);
+  background-size: cover;
 }
 
 #game-screen {
-    align-content: center;
-    padding: 20px 0px;
-    overflow: hidden;
-    position: relative;
-    background-image: url(../images/sea.jpg);
-    background-size: cover;
-    animation: slide 5s linear infinite;
+  display: flex;
+  align-content: center;
+  padding: 20px 0px;
+  width: 30vw;
+  height: 40vw;
+  overflow: hidden;
+  position: relative;
+  background-image: url(../images/sea.jpg);
+  background-size: cover;
+  animation: slide 5s linear infinite;
 }
 
 @keyframes slide {
@@ -32,6 +77,51 @@
   }
 }
 
+.cargo-sway{
+  animation: sway 5s;
+  animation-iteration-count: infinite;
+}
+
+.cargo-weight{
+  font-size: 1.3em;
+  padding-left: 25%;
+  transform : skewX(45deg);
+}
+
+@keyframes sway {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  50% { transform: translate(1px, -1px) rotate(20deg); }
+  100% { transform: translate(1px, -1px) rotate(-20deg); }
+}
+
 #game-end {
-    display: none;
+  display: none;
+  justify-content: center;
+}
+
+.dot{
+  position:absolute;
+  top:0;
+  left:0;
+  width:50px;
+  height:50px;
+  background-image:url('../images/sun/sun-rise.png');
+  background-size: contain;
+  border-radius:50%;
+}
+.sun{
+  width:200px;
+  height:200px;
+  position:absolute;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-name:orbit;
+  -webkit-animation-duration:60s;
+  top:50px;
+  left:50px;
+}
+
+@-webkit-keyframes orbit { 
+from { -webkit-transform:rotate(0deg) } 
+to { -webkit-transform:rotate(360deg) } 
 }
