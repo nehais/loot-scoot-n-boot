@@ -13,12 +13,15 @@ class Cargo{
         const leftLoc   = [85, 170, 195, 250, 280, 325, 375, 400, 430];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
 
+        const topLoc    = [-0.4, 0.5, 0, 0.3, 0.7, -0.6, -0.7];
+        const topIdx    = Math.floor(Math.random() * topLoc.length);
+
         this.gameScreen = gameScreen;
         this.left       = leftLoc[leftIdx];
-        this.top        = -30;
+        this.top        = -height;
         this.width      = width;
         this.height     = height;
-        this.directionX = 0;
+        this.directionX = topLoc[topIdx];
         this.directionY = speedY[speedIdx];
         
         this.element    = document.createElement("div");

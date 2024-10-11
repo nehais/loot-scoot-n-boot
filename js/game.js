@@ -7,7 +7,7 @@ class Game {
         this.gameEndScreen      = document.querySelector('#game-end');
         this.missilesElement    = document.querySelector('#missiles');
         this.scoreElement       = document.querySelector('#score');
-        this.height             = 800;  //Play area height
+        this.height             = 650;  //Play area height
         this.width              = 600;  //Play area width
         this.pirates            = [];
         this.cargos             = [];
@@ -21,7 +21,10 @@ class Game {
         this.gameScreen.style.position = "relative";
         
         let imgSrc  = '../images/ship-trail.png';
-        this.player = new Player(this.gameScreen, 250, 650, 50, 200, imgSrc);     
+        this.player = new Player(this.gameScreen, 250, 550, 50, 200, imgSrc, this.height, this.width);    
+        
+        this.horn   = new Audio('../sounds/horn.wav');
+        this.money  = new Audio('../sounds/money.wav');
     }
 
     start (){
@@ -65,6 +68,7 @@ class Game {
 
             const cargoCollected = this.player.didCollide(cargo);
             if (cargoCollected){
+                this.money.play();              //Play money sound for Cargo pickup
                 //Get the weight
                 const weight = cargo.element.querySelector('.cargo-weight'); 
                 this.score   += Number(weight.textContent);
@@ -73,18 +77,26 @@ class Game {
                 cargo.element.remove();         //Remove the cargo from the screen
                 this.cargos.splice(index, 1);   //Remove the cargo from JS array
             }
+            else if (cargo.top > this.height){
+                cargo.element.remove();         //Remove the cargo from the screen
+                this.cargos.splice(index, 1);   //Remove the cargo from JS array
+            }
         })
 
         this.pirates.forEach((pirate, index) => {
             pirate.move();
 
-            const pirateCollided = this.player.didCollide(cargo);
+            const pirateCollided = this.player.didCollide(pirate);
             if (pirateCollided){
                 //Get the weight
                 //const weight = cargo.element.querySelector('.cargo-weight'); 
                 //this.score   += Number(weight.textContent);
                 //this.scoreElement.textContent = this.score;
                 
+                pirate.element.remove();         //Remove the cargo from the screen
+                this.pirates.splice(index, 1);   //Remove the cargo from JS array
+            }
+            else if (pirate.top > this.height){
                 pirate.element.remove();         //Remove the cargo from the screen
                 this.pirates.splice(index, 1);   //Remove the cargo from JS array
             }

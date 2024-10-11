@@ -1,10 +1,12 @@
 class Player{
-    constructor (gameScreen, left, top, width, height, imgSrc){
+    constructor (gameScreen, left, top, width, height, imgSrc, gameHeight, gameWidth){
         this.gameScreen = gameScreen;
         this.left       = left;
         this.top        = top;
         this.width      = width;
         this.height     = height;
+        this.gameHeight = gameHeight;
+        this.gameWidth  = gameWidth;
         this.directionX = 0;
         this.directionY = 0;
         this.element    = document.createElement("img");
@@ -24,10 +26,10 @@ class Player{
         let newLeft = this.left + this.directionX;
         let newTop  = this.top  + this.directionY;
 
-        if ((newLeft <= 550) && (newLeft >= 0)){
+        if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if ((newTop <= 750) && (newTop >= 0)){
+        if ((newTop <= this.gameHeight) && (newTop >= 0)){
             this.top = newTop;
         }
         this.updatePosition();

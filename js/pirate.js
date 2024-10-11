@@ -8,7 +8,7 @@ class Pirate{
         
         this.gameScreen = gameScreen;
         this.left       = leftLoc[leftIdx];
-        this.top        = -200;
+        this.top        = -height;
         this.width      = width;
         this.height     = height;
         this.directionX = 0;
@@ -28,12 +28,7 @@ class Pirate{
     move(){
         this.left     += this.directionX;
         this.top      += this.directionY;
-
-        /*if ((this.left > 350) || (this.left < 50)){
-            return;
-        } else if ((this.top > 495) || (this.left < 0)){
-            return;
-        }*/
+        
         this.updatePosition();
     }
 

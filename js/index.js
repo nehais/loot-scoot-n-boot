@@ -20,16 +20,16 @@ window.onload = function () {
       console.log("keydown pressed");
   
       if (e.keyCode == '38') {// up arrow
-        scootGame.player.directionY -= 0.01;
+        scootGame.player.directionY -= 0.5;
       }
       else if (e.keyCode == '40') {// down arrow
-        scootGame.player.directionY += 0.01;
+        scootGame.player.directionY += 0.5;
       }
       else if (e.keyCode == '37') {// left arrow
-        scootGame.player.directionX -= 0.01;
+        scootGame.player.directionX -= 0.5;
       }
       else if (e.keyCode == '39') {// right arrow
-        scootGame.player.directionX += 0.01;
+        scootGame.player.directionX += 0.5;
       }
     }
     
