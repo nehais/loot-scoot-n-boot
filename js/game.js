@@ -28,6 +28,8 @@ class Game {
     }
 
     start (){
+        this.horn.play();              //Play Horn sound for game start
+                
         this.gameScreen.style.height    = `${this.height}px`;
         this.gameScreen.style.width     = `${this.width}px`;
         this.startScreen.style.display  = "none";
