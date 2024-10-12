@@ -1,10 +1,16 @@
 class Pirate{
     constructor (gameScreen, width, height, imgSrc){
+        //Randomly select the Pirate ship start Location
         const leftLoc   = [85, 170, 195, 250, 280, 325, 375, 400, 430];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
         
-        const speedY    = [0.1, 0.5, 0.8, 1, 1.3, 1.8, 2];
+        //Randomly select the Pirate ship Speed
+        const speedY    = [3, 3.5, 2.8, 1, 1.3, 1.8, 2, 4];
         const speedIdx  = Math.floor(Math.random() * speedY.length);
+
+        //Randomly select the Pirate return Cargo weight
+        const weight    = [100, 95, 125];
+        const weightIdx = Math.floor(Math.random() * weight.length);
         
         this.gameScreen = gameScreen;
         this.left       = leftLoc[leftIdx];
@@ -20,7 +26,9 @@ class Pirate{
         this.element.style.width    = `${width}px`;
         this.element.style.height   = `${height}px`;
         this.element.src            = imgSrc; 
+        this.element.classList.add('pirate-sway');
         this.element.style.position = "absolute";
+        this.element.setAttribute('weight', weight[weightIdx]);
         
         this.gameScreen.appendChild(this.element);
     }
@@ -38,10 +46,19 @@ class Pirate{
     }
 
     didCollide(obstacle){
-        if(obstacle){
-            return true;
-        }
+        const pirateRect    = this.element.getBoundingClientRect();
+        const obstacleRect  = obstacle.element.getBoundingClientRect();
 
-        return false;
+        //Check if there is collision
+        if (
+            pirateRect.left < obstacleRect.right &&
+            pirateRect.right > obstacleRect.left &&
+            pirateRect.top < obstacleRect.bottom &&
+            pirateRect.bottom > obstacleRect.top
+          ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -9,6 +9,8 @@ class Player{
         this.gameWidth  = gameWidth;
         this.directionX = 0;
         this.directionY = 0;
+        this.reduceY    = 0;
+        this.currAngle  = 0;
         this.element    = document.createElement("img");
 
         this.element.style.left     = `${left}px`;
@@ -17,12 +19,17 @@ class Player{
         this.element.style.height   = `${height}px`;
         this.element.src            = imgSrc; 
         this.element.style.position = "absolute";
+        this.element.classList.add('ship-rotate');
         
         this.gameScreen.appendChild(this.element);
     }
 
     move(){        
-        //Move the player ship position values within the screen        
+        //Move the player ship position values within the screen 
+        if (this.directionY !== 0){
+            this.directionY -= this.reduceY;
+        }
+        
         let newLeft = this.left + this.directionX;
         let newTop  = this.top  + this.directionY;
 
@@ -55,5 +62,10 @@ class Player{
         } else {
             return false;
         }
+    }
+
+    rotatePlayer(angle) {
+        this.currAngle += angle;
+        this.element.style.transform = `rotate(${angle}deg)`;
     }
 }

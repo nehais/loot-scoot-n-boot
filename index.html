@@ -13,10 +13,48 @@
     <main>        
         <!-- #game-intro is visible on Game Load-->
         <div id="game-intro">
-            <img src="./images/game-intro.jpg" alt="" id="intro-img">
+            <!--img src="./images/game-intro.jpg" alt="" id="intro-img"-->
             <img src="./images/game-logo.png" alt="" id="logo-img">
 
+            <div id="levels">
+                <div id="level1" class="level-class">
+                    <div><h2>BEGINNER</h2></div>
+                    <h3>Cargo Target : 500</h3>
+                    <h3>Ship Missiles : 5</h3>
+                    <h3>Collision Damage : 100 Cargos</h3>
+                </div>
+
+                <div id="level2" class="level-class">
+                    <div><h2>INTERMEDIATE</h2></div>
+                    <h3>Cargo Target : 1000</h3>
+                    <h3>Ship Missiles : 3</h3>
+                    <h3>Collision Damage : 500 Cargos</h3>
+                </div>
+
+                <div id="level3" class="level-class">
+                    <div><h2>EXPERT</h2></div>
+                    <h3>Cargo Target : 2000</h3>
+                    <h3>Ship Missiles : 2</h3>
+                    <h3>Collision Damage : All Cargos</h3>
+                </div>
+            </div>
             <button id="start-button" class="game-buttons">Start</button> 
+            <button class="helper-button" id="help-button">Help</button> 
+        </div>
+        
+        <!-- #game-help is initially hidden using CSS style display: none -->
+        <div id="game-help"> 
+            <div>
+                <h2>Game Instructions</h2>
+                <h3>Use arrow keys to navigate the Ship</h3>
+                <h3>Collect Cargo by touching it</h3>
+                <h3>No. on the Cargo shows collection Weight</h3>
+                <h3>1/2 way to the Target the Ship speed will decrease</h3>
+                <h3>Collision with the Pirate ship has Collision Damage</h3>
+                <h3>Shoot the Pirate ship down with spacebar</h3>
+                <h3>Shoot down Pirate ship will return HUGE Cargo</h3>
+            </div>
+            <button class="helper-button" id="back-button">Back</button>  
         </div>
 
         <!-- #game-container is initially hidden using CSS style display: none -->
@@ -25,9 +63,12 @@
                 <div class="sun">
                     <div class="dot"></div>
                 </div>
-                <div> 
-                    <h2>Stats</h2>
-                    <p>Total Cargos Weight: <span id="score">0</span></p>
+                <div id="stats"> 
+                    <h3>Cargo Weight Collected</h3>
+                    <div id="progress">
+                        <div id="progressBar"></div>
+                    </div>
+
                     <p>Missiles Left: <span id="missiles">0</span></p>
                 </div>
             </div>

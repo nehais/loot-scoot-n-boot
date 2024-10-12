@@ -1,8 +1,8 @@
 body{
-  background-color: #92e5e8;
-  /*background-image: url(../images/game-back.jpg);
+  background-color: #92e5e8;  
+  background-image: url(../images/game-back.jpg);
+  background-repeat:no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;*/
 }
 
 #game-intro {
@@ -17,29 +17,87 @@ body{
 }
 
 #logo-img{
-  position: absolute;
+  margin: 50px;
+  width: 200px;
   top: 20vh;
   left: 100vh;
-  transform: scale(1.5);
-  transition: all 5s;
 }
 
-.game-buttons:hover{
-  animation: shake 0.2s;
-  animation-iteration-count: infinite;
+#levels{
+  display: flex;
+  flex-direction: row;
 }
 
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  50% { transform: translate(1px, -1px) rotate(1deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
+.level-class{
+  background-color: rgba(78, 131, 149, 0.7) ;
+  border: solid 2px rgb(8, 47, 111);
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 10px;
+  text-align: center;
+  margin-right: 35px;
+
+  div{
+    background-color: rgba(213, 67, 18, 0.375);
+    color: white;
+  }
+  h3{
+    text-align: left;
+  }
+}
+
+.level-selected{
+  border: solid 3px rgb(8, 47, 111);
+  transform: scale(1.1);
+  transition: transform ease-in-out;
+}
+
+.level-class:hover{
+  background-color: rgba(32, 71, 83, 0.7) ;
+}
+
+.game-buttons:hover, #help:hover{
+  transform: scale(1.2);
+  transition: transform 1s ease-in-out;
 }
 
 .game-buttons{
-  background-color: #ff302a;
+  background-color: #d1150e8b;
   border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
   font-size: 1.8em;
+  margin-top: 50px;
+  padding: 10px 30px;
+}
+
+#game-help{
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  text-align: center;
+  
+  div{
+    background-color: #03415269;
+    border: solid 2px rgb(21, 58, 118);
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 10px;
+    margin: 50px;
+  }
+
+  h2{
+    background-color: rgba(213, 67, 18, 0.375);
+    color: white;
+  }
+}
+
+.helper-button{
+  background-color: #3aae70a0;;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  color: #fffac2;
+  font-size: 1em;
   margin-top: 50px;
   padding: 10px 30px;
 }
@@ -47,9 +105,7 @@ body{
 #game-container {
   display: none;
   padding: 20px 0px;
-  justify-content: center;
-  background-image: url(../images/game-back.jpg);
-  background-size: cover;
+  justify-content: center;  
 }
 
 #game-screen {
@@ -77,15 +133,58 @@ body{
   }
 }
 
-.cargo-sway{
-  animation: sway 5s;
+#stats{
+  text-align: center;
+  margin-right: 50px;
+  
+  p{
+    margin-top: 30px;
+    font-size: 1.3em;
+  }
+}
+
+#progress {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 5px;
+  z-index: 111;
+}
+
+#progressBar {
+  height: 20px;
+  background-color: #4caf50;
+  width: 0%;
+  border-radius: 8px;
+  z-index: 111;
+}
+
+.ship-rotate{
+  transition: transform 0.5s;
+}
+
+.pirate-sway{
+  animation: pirate-sway 5s;
   animation-iteration-count: infinite;
+}
+
+@keyframes pirate-sway {
+  0% { transform:  rotate3d(0deg); }
+  50% { transform:  rotate3d(1, 1, 1, 10deg); }
+  100% { transform:  rotate3d(1, 1, 1,-10deg); }
 }
 
 .cargo-weight{
   font-size: 1.3em;
-  padding-left: 25%;
+  padding-top: 15%;
+  padding-left: 20%;
   transform : skewX(45deg);
+}
+
+.cargo-sway{
+  animation: sway 5s;
+  animation-iteration-count: infinite;
 }
 
 @keyframes sway {

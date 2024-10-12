@@ -1,29 +1,32 @@
 class Cargo{
-    constructor (gameScreen, width, height){
-        //const orgCargoL = "../images/containers/orange-cont-l.png";
+    constructor (gameScreen, width, height, top, left, weight){
+        //Randomly select the Cargo
         const orgCargoR = "../images/containers/orange-cont-r.png";
-        //const yelCargoL = "../images/containers/yellow-cont-l.png";
         const yelCargoR = "../images/containers/yellow-cont-r.png";
         const allCargo  = [orgCargoR, yelCargoR]
         const cargoIdx  = Math.floor(Math.random() * allCargo.length);
 
+        //Randomly select the Cargo Speed
         const speedY    = [0.1, 0.5, 0.8, 1, 1.3, 1.8, 2]
         const speedIdx  = Math.floor(Math.random() * speedY.length);
         
+        //Randomly select the Cargo start Location
         const leftLoc   = [85, 170, 195, 250, 280, 325, 375, 400, 430];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
 
+        //Randomly select the Cargo sway speed
         const topLoc    = [-0.4, 0.5, 0, 0.3, 0.7, -0.6, -0.7];
         const topIdx    = Math.floor(Math.random() * topLoc.length);
 
         this.gameScreen = gameScreen;
-        this.left       = leftLoc[leftIdx];
-        this.top        = -height;
+        this.left       = (left ? left : leftLoc[leftIdx]);
+        this.top        = (top ? top : -height);
         this.width      = width;
         this.height     = height;
         this.directionX = topLoc[topIdx];
         this.directionY = speedY[speedIdx];
         
+        //Create a Cargo Element with weight info text on it
         this.element    = document.createElement("div");
 
         this.element.style.backgroundImage = `url('${allCargo[cargoIdx]}')`;
@@ -35,14 +38,17 @@ class Cargo{
         this.element.style.height   = `${height}px`;
         this.element.style.position = "absolute";
         this.element.classList.add('cargo-sway');
+        this.element.classList.add('cargo-pick');
+
+        const wgt = (weight ? weight :  speedIdx * 10);
+                    
+        this.element.setAttribute('weight', wgt);
 
         this.weightElement             = document.createElement("span");
-        this.weightElement.textContent = speedIdx * 10;
+        this.weightElement.textContent = wgt;
         this.weightElement.classList.add('cargo-weight');
         
-        //this.divElement.appendChild(this.element);
         this.element.appendChild(this.weightElement);
-
         this.gameScreen.appendChild(this.element);
     }
 
