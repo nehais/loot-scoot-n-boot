@@ -11,13 +11,17 @@ class Game {
         this.gameScreen         = document.querySelector('#game-screen');
         this.gameContainer      = document.querySelector('#game-container');
         this.gameEndScreen      = document.querySelector('#game-end');
+        this.targetInfoElement  = document.querySelector('#target-info');        
         this.missilesElement    = document.querySelector('#missiles');
         this.scoreElement       = document.querySelector('#score');
+        this.timerElement       = document.querySelector('#timer');
+        this.timerCount         = 60;
         this.height             = 800;  //Play area height
         this.width              = 700;  //Play area width
         this.pirates            = [];
         this.cargos             = [];
-        this.missiles           = 3;
+        this.missiles           = [];
+        this.missilesCount      = 0;
         this.score              = 0;
         this.gameIsOver         = false;
         this.gameIntervalId     = null;
@@ -33,6 +37,7 @@ class Game {
         this.money  = new Audio('../sounds/money.wav');
         this.sink   = new Audio('../sounds/sink.wav');
         this.steal  = new Audio('../sounds/steal.flac');
+        this.shoot  = new Audio('../sounds/shoot.wav');
         this.setLevelParameters();
     }
 
@@ -41,16 +46,21 @@ class Game {
             case "LEVEL1":
               this.targetScore        = 500;
               this.pirateStealWeight  = 100;
+              this.missilesCount      = 5;
               break;
             case "LEVEL2":
               this.targetScore        = 1000;
               this.pirateStealWeight  = 500;
+              this.missilesCount      = 3;
               break;            
             case "LEVEL3":
               this.targetScore        = 2000;
               this.pirateStealWeight  = 500000;
+              this.missilesCount      = 2;
               break;
-          }
+        }
+        this.targetInfoElement.textContent  = this.targetScore;
+        this.missilesElement.textContent    = this.missilesCount;
     }
 
     start (){
@@ -71,12 +81,20 @@ class Game {
             this.cargos.push(newCargo);
         }, this.CARGO_SPAWN_INTERVAL);
 
+        this.game60Timer                = setInterval(()=>{
+            this.timerCount -= 1;
+            this.timerElement.textContent = this.timerCount;
+        }, 1000);
+
         this.gameTimerId                = setTimeout(()=>{
             this.gameIsOver = true;
             this.gameEndScreen.style.display= "flex";
             this.gameContainer.style.display= "none";
             this.gameScreen.style.display   = "none";
             clearTimeout(this.gameTimerId);
+            clearTimeout(this.gameIntervalId);
+            clearTimeout(this.cargoIntervalId);
+            clearTimeout(this.game60Timer);
         }, 60000);
     }
 
@@ -92,6 +110,7 @@ class Game {
         this.player.move();
         this.handleObstacleMove (this.cargos, 'CARGO', this.money);
         this.handleObstacleMove (this.pirates, 'PIRATE', this.steal);
+        this.handleObstacleMove (this.missiles, 'MISSILE', this.steal);
 
         // Create a new Pirate based on a random probability
         // when there is no other Pirate on the screen
@@ -106,16 +125,12 @@ class Game {
         for (let i=0 ; i<obstacles.length ; i++){
             obstacles[i].move();
 
-            const obstacleCollided = this.player.didCollide(obstacles[i]);
-            if (obstacleCollided){
+            const obstacleCollidedPlayer = this.player.didCollide(obstacles[i]);
+            if (obstacleCollidedPlayer){                //Player collided with Cargo or Pirate
                 collisionSound.play();                  //Play collision sound
                 if (obstacleType === 'PIRATE'){         //Remove the Cargo weight from ship as Pirate stole                    
                     this.score      = ((this.score - this.pirateStealWeight) > 0 ? this.score - this.pirateStealWeight : 0);
                     this.setProgress();
-                    /*SHOT DOWN
-                    const weight    = obstacles[i].element.getAttribute('weight');
-                    const newCargo  = new Cargo(this.gameScreen, 60, 35, obstacles[i].top, obstacles[i].left, weight);
-                    this.cargos.push(newCargo); */
                 }
                 else{                                   //Collect Cargo weight
                     const weight = obstacles[i].element.getAttribute('weight'); 
@@ -124,18 +139,31 @@ class Game {
                 }
                 this.removeElement(obstacles, i);
             }
-            else if (obstacles[i].top > this.height){   //Obstacle moved out of the screen
+            else if (obstacles[i].top > this.height){   //Check if Obstacle moved out of the screen
                 this.removeElement(obstacles, i);
             }
-            else if (obstacleType === 'CARGO') {        //Cargo lost due to collision with Pirate
+            else if (obstacleType === 'CARGO') {        
                 for (let j=0 ; j<this.pirates.length ; j++){
-                    const cargoCollided = this.pirates[j].didCollide(obstacles[i]);
-                    if (cargoCollided){
+                    const cargoCollidedPirate = this.pirates[j].didCollide(obstacles[i]);
+                    if (cargoCollidedPirate){           //Cargo lost due to collision with Pirate
                         this.sink.play();               //Play sink sound for Cargo lost
                         this.removeElement(obstacles, i);
                     }
                 }
-            } 
+            }
+            else if (obstacleType === 'MISSILE') {      
+                for (let j=0 ; j<this.pirates.length ; j++){
+                    const missileCollidedPirate = this.pirates[j].didCollide(obstacles[i]);
+                    if (missileCollidedPirate){         //Pirate ship shot down
+                        this.sink.play();               //Play sink sound for Pirate ship                    
+                        const weight    = this.pirates[j].element.getAttribute('weight');
+                        const newCargo  = new Cargo(this.gameScreen, 60, 35, obstacles[i].top, obstacles[i].left, weight);
+                        this.cargos.push(newCargo);
+                        this.removeElement(obstacles, i);
+                        this.removeElement(this.pirates, j);
+                    }
+                }
+            }  
         }
     }
 
@@ -150,7 +178,20 @@ class Game {
         progressBar.style.width = `${progressPercent}%`; 
 
         if (progressPercent >= 50){
-            this.player.reduceY = 0.25;
+            this.player.reduceY = 0.15;
+        }
+        else if (progressPercent >= 100){
+            this.gameIsOver = true;
+        }
+    }
+
+    shootMissile(){
+        if (this.missilesCount > 0){
+            this.shoot.play();
+            this.missilesCount                  -= 1;
+            this.missilesElement.textContent    = this.missilesCount;
+            const newMissile                    = new Missile(this.gameScreen, 5, 10, this.player.top, this.player.left + 20);
+            this.missiles.push(newMissile);
         }
     }
 }

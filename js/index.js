@@ -85,6 +85,9 @@ window.onload = function () {
         scootGame.player.directionX += 0.5;
         scootGame.player.rotatePlayer(25);
       }
+      else if (e.keyCode == '32') {// spacebar
+        scootGame.shootMissile();
+      }
     }
     
     document.body.addEventListener("keyup", keyUpPressed);

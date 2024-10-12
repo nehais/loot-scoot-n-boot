@@ -53,10 +53,10 @@ class Player{
 
         //Check if there is collision
         if (
-            playerRect.left < obstacleRect.right &&
-            playerRect.right > obstacleRect.left &&
-            playerRect.top < obstacleRect.bottom &&
-            playerRect.bottom > obstacleRect.top
+            playerRect.left < (obstacleRect.right) &&
+            playerRect.right > (obstacleRect.left) &&
+            playerRect.top < (obstacleRect.bottom-15) &&
+            playerRect.bottom > (obstacleRect.top-15)
           ) {
             return true;
         } else {

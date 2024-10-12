@@ -51,10 +51,10 @@ class Pirate{
 
         //Check if there is collision
         if (
-            pirateRect.left < obstacleRect.right &&
-            pirateRect.right > obstacleRect.left &&
-            pirateRect.top < obstacleRect.bottom &&
-            pirateRect.bottom > obstacleRect.top
+            pirateRect.left < (obstacleRect.right) &&
+            pirateRect.right > (obstacleRect.left) &&
+            pirateRect.top < (obstacleRect.bottom-15) &&
+            pirateRect.bottom > (obstacleRect.top-15)
           ) {
             return true;
         } else {

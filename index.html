@@ -44,10 +44,14 @@
         
         <!-- #game-help is initially hidden using CSS style display: none -->
         <div id="game-help"> 
-            <div>
+            <div id="story">
+                <p>A Cargo ship has crashed & the Cargos are scattered all over the sea. The Pirates are on loose looting the Cargos.
+                    You are deployed with armed ship to collect the Target Cargos before the sun sets.</p>
+            </div>
+            <div id="help-info">
                 <h2>Game Instructions</h2>
                 <h3>Use arrow keys to navigate the Ship</h3>
-                <h3>Collect Cargo by touching it</h3>
+                <h3>Collect Cargo by landing on it</h3>
                 <h3>No. on the Cargo shows collection Weight</h3>
                 <h3>1/2 way to the Target the Ship speed will decrease</h3>
                 <h3>Collision with the Pirate ship has Collision Damage</h3>
@@ -60,19 +64,30 @@
         <!-- #game-container is initially hidden using CSS style display: none -->
         <div id="game-container">
             <div>        
-                <div class="sun">
-                    <div class="dot"></div>
-                </div>
                 <div id="stats"> 
                     <h3>Cargo Weight Collected</h3>
-                    <div id="progress">
-                        <div id="progressBar"></div>
+                    <div id="progress-area">
+                        <div id="progress">
+                            <div id="progressBar"></div>
+                        </div>
+                        <h3 id="target-info">0</h3>
                     </div>
+                    
 
-                    <p>Missiles Left: <span id="missiles">0</span></p>
+                    <p><img src="./images/missile.png" alt="" id="missile-logo">
+                        Missiles Left: <span id="missiles">0</span></p>
                 </div>
             </div>
             <div id="game-screen"></div>
+            <div id="game-option">
+
+                <div id="timer-area">
+                    <div class="sun"><h3 id="timer">60</h3></div>                    
+                </div>              
+                <div>
+                    <button id="new-game" class="game-buttons">New Game</button>
+                </div>                
+            </div>                
         </div>
       
         <!-- #game-container is initially hidden using CSS style display: none -->
@@ -81,6 +96,7 @@
         </div>
     </main>
 
+    <script type="text/javascript" src="js/missile.js"></script>
     <script type="text/javascript" src="js/cargo.js"></script>
     <script type="text/javascript" src="js/pirate.js"></script>
     <script type="text/javascript" src="js/player.js"></script>

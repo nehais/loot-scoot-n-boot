@@ -23,6 +23,10 @@ body{
   left: 100vh;
 }
 
+#missile-logo{
+  height: 4vh;
+}
+
 #levels{
   display: flex;
   flex-direction: row;
@@ -76,15 +80,15 @@ body{
   display: none;
   flex-direction: column;
   text-align: center;
-  
-  div{
-    background-color: #03415269;
-    border: solid 2px rgb(21, 58, 118);
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    padding: 10px;
-    margin: 50px;
-  }
+}
+
+#help-info{
+  background-color: #03415269;
+  border: solid 2px rgb(21, 58, 118);
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 10px;
+  margin: 20px 50px 50px 50px;
 
   h2{
     background-color: rgba(213, 67, 18, 0.375);
@@ -93,13 +97,33 @@ body{
 }
 
 .helper-button{
-  background-color: #3aae70a0;;
+  background-color: #3aae70a0;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
   font-size: 1em;
   margin-top: 50px;
   padding: 10px 30px;
+}
+
+#story{ 
+  background-color: #03415269;
+  border: solid 4px rgb(21, 58, 118);
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  font-size: 1.4em;
+  padding: 10px;
+  margin: 30px;
+  width: 600px;
+
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: blink-caret .75s step-end infinite;
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
 }
 
 #game-container {
@@ -143,6 +167,11 @@ body{
   }
 }
 
+#progress-area{
+  display: flex;
+  align-items: center;
+}
+
 #progress {
   width: 100%;
   background-color: #ddd;
@@ -158,6 +187,12 @@ body{
   width: 0%;
   border-radius: 8px;
   z-index: 111;
+}
+
+#target-info{
+  color: rgb(18, 159, 41);
+  font-size: 1.2em;
+  padding-bottom: 2px;
 }
 
 .ship-rotate{
@@ -193,34 +228,59 @@ body{
   100% { transform: translate(1px, -1px) rotate(-20deg); }
 }
 
+#game-option{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#timer-area{
+  display: flex;
+  align-items: center;
+  font-size: 2em;
+  animation: blink 1.5s infinite;
+}
+
+.sun {
+  width: 100px;
+  height: 100px;
+  background-image: url('../images/sun/sun-rise.png');
+  background-size: contain;
+  border-radius: 50%;
+  margin: 20px 20px 0 50px;
+  position: relative;
+  animation: blink 1.5s infinite;
+}
+
+#timer{
+  position: absolute;
+  left: 25px;
+  top: -20px;
+  font-size: 1.3em;
+}
+
+/* Blinking keyframes */
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.3;
+  }
+}
+
+#new-game{
+  background-color: #d1150e8b;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  color: #fffac2;
+  font-size: 1em;
+  margin-left: 50px;
+  padding: 10px;
+}
+
 #game-end {
   display: none;
   justify-content: center;
-}
-
-.dot{
-  position:absolute;
-  top:0;
-  left:0;
-  width:50px;
-  height:50px;
-  background-image:url('../images/sun/sun-rise.png');
-  background-size: contain;
-  border-radius:50%;
-}
-.sun{
-  width:200px;
-  height:200px;
-  position:absolute;
-  -webkit-animation-iteration-count:infinite;
-  -webkit-animation-timing-function:linear;
-  -webkit-animation-name:orbit;
-  -webkit-animation-duration:60s;
-  top:50px;
-  left:50px;
-}
-
-@-webkit-keyframes orbit { 
-from { -webkit-transform:rotate(0deg) } 
-to { -webkit-transform:rotate(360deg) } 
 }
