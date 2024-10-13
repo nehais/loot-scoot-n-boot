@@ -13,10 +13,11 @@ window.onload = function () {
     let gameLevel;
     let scootGame;
   
+    //On game load initially set it on Level 1
     gameLevel = "LEVEL1";
     changeLevel(level1);
 
-    //Start the game on click of start button
+    //Set & Select the game Level
     level1.addEventListener("click", function () {
       gameLevel = "LEVEL1";
       changeLevel(level1);
@@ -31,6 +32,7 @@ window.onload = function () {
     });
     
     function changeLevel(level) {
+      //Add/Remove class to mark the Level selected
       level1.classList.remove('level-selected');
       level2.classList.remove('level-selected');
       level3.classList.remove('level-selected');
@@ -43,7 +45,6 @@ window.onload = function () {
     });
   
     function startGame() {
-      console.log("game started");
       scootGame = new Game(gameLevel);
       scootGame.start();
     }
@@ -55,7 +56,6 @@ window.onload = function () {
   
     function helpGame() {
       startScreen.style.display = "none";
-      helpScreen.style.opacity = 1;
       helpScreen.style.display  = "flex";
     }
     

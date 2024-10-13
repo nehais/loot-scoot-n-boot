@@ -1,9 +1,9 @@
 class Cargo{
     constructor (gameScreen, width, height, top, left, weight){
         //Randomly select the Cargo
-        const orgCargoR = "../images/containers/orange-cont-r.png";
-        const yelCargoR = "../images/containers/yellow-cont-r.png";
-        const allCargo  = [orgCargoR, yelCargoR]
+        const orgCargo = "../images/containers/orange-cont-r.png";
+        const yelCargo = "../images/containers/yellow-cont-r.png";
+        const allCargo  = [orgCargo, yelCargo]
         const cargoIdx  = Math.floor(Math.random() * allCargo.length);
 
         //Randomly select the Cargo Speed
@@ -19,6 +19,7 @@ class Cargo{
         const topIdx    = Math.floor(Math.random() * topLoc.length);
 
         this.gameScreen = gameScreen;
+        //Create Cargo on Dead Pirate location or randomly bring it on Sea
         this.left       = (left ? left : leftLoc[leftIdx]);
         this.top        = (top ? top : -height);
         this.width      = width;
@@ -61,7 +62,7 @@ class Cargo{
     }
 
     updatePosition(){
-        //Update the cargo on position on the screen
+        //Update the cargo position on the screen
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
     }

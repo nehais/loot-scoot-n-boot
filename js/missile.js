@@ -30,7 +30,7 @@ class Missile{
     }
 
     updatePosition(){
-        //Update the missile on position on the screen
+        //Update the missile position on the screen
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
     }

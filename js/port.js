@@ -33,7 +33,7 @@ class Port{
     }
 
     updatePosition(){
-        //Update the port on position on the screen
+        //Update the port position on the screen
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
     }

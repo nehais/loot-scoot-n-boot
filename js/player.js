@@ -1,8 +1,9 @@
 class Player{
     constructor (gameScreen, left, top, width, height, imgSrc, gameHeight, gameWidth){
         this.gameScreen = gameScreen;
-        this.gameEnded  = false;
+        this.gameTargetD= false;
         this.docking    = false;
+        this.docked     = false;
         this.left       = left;
         this.top        = top;
         this.width      = width;
@@ -35,21 +36,28 @@ class Player{
         let newLeft = this.left + this.directionX;
         let newTop  = this.top  + this.directionY;
 
+        //Check Player should not move out of the screen
         if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if (((newTop <= this.gameHeight) && (newTop >= 0)) && !this.gameEnded){
+        if (((newTop <= this.gameHeight) && (newTop >= 0)) && !this.gameTargetD){
             this.top = newTop;
         }
-        if (this.gameEnded && !this.docking){
-            this.directionY = -4;
 
-            if (this.top <= -this.height){ 
+        if (this.gameTargetD && !this.docking){
+            //Game target achieved but the Ship docking has not started
+            
+            //Increase the speed of the ship to go off the screen
+            this.directionY = -4;                                   
+            this.rotatePlayer(0);
+                
+            if (this.top <= -this.height){
+                //Ship is off screen
+                //Increase Ship size & position it down to bring it up for Docking 
                 this.docking                = true;
-                this.rotatePlayer(0);
-                this.element.src            = '../images/ship.png'
-                this.directionY             = -1;    
-                this.left                   = 130;
+                this.element.src            = '../images/ship.png'  //Use no running Ship image
+                this.directionY             = -1;                   //Slow down to dock
+                this.left                   = 130;                  //Locking yard position
                 this.top                    = this.gameHeight;
                 this.element.style.top      = `${this.gameHeight + (this.height * 1.8)}px`;
                 this.element.style.width    = `${this.width * 1.5}px`;
@@ -61,7 +69,10 @@ class Player{
             this.left                       = 130;
             let newTop  = this.top  + this.directionY;    
             if (((newTop >= 295))){
-                this.top = newTop;
+                this.top = newTop;                                  //Move up to docking position
+            }
+            else{
+                this.docked = true;                                 //Ship docked
             }
         }
 
@@ -69,6 +80,7 @@ class Player{
     }
 
     updatePosition(){
+        //Update the Player position on the screen
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
     }
@@ -77,7 +89,7 @@ class Player{
         const playerRect    = this.element.getBoundingClientRect();
         const obstacleRect  = obstacle.element.getBoundingClientRect();
 
-        //Check if there is collision
+        //Check if there is collision with the obstacle
         if (
             playerRect.left < (obstacleRect.right) &&
             playerRect.right > (obstacleRect.left) &&
@@ -91,6 +103,7 @@ class Player{
     }
 
     rotatePlayer(angle) {
+        //Steer the Player by rotating if Left or Right arrow was pressed
         this.element.style.transform = `rotate(${angle}deg)`;
     }
 }

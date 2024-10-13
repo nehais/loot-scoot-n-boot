@@ -10,15 +10,15 @@ class Game {
         this.startScreen        = document.querySelector('#game-intro');
         this.gameScreen         = document.querySelector('#game-screen');
         this.gameContainer      = document.querySelector('#game-container');
-        this.gameEndPlayScreen  = document.querySelector('#game-end');
-        this.targetInfoElement  = document.querySelector('#target-info');  
-        this.scoreElement       = document.querySelector('#score');
+        this.gameTargetDScreen  = document.querySelector('#game-end');
+        this.targetInfoElement  = document.querySelector('#target-info');
         this.timerElement       = document.querySelector('#timer');
         this.timerAreaElement   = document.querySelector('#timer-area');
         this.sunElement         = document.querySelector('#sun-shine');
-        this.timerCount         = 60;
+        this.timerCount         = 60;   //Game Duration
         this.height             = 800;  //Play area height
         this.width              = 700;  //Play area width
+        this.port               = null;
         this.pirates            = [];
         this.cargos             = [];
         this.missiles           = [];
@@ -26,9 +26,10 @@ class Game {
         this.score              = 0;
         this.gameIsOver         = false;
         this.gameIntervalId     = null;
+        this.cargoIntervalId    = null;
+        this.counterTimerIntervalId   = null;
         this.gameTimerId        = null;
         this.gameLoopFrecuency  = Math.round(1000/60);
-        this.port               = null;
         
         this.gameScreen.style.position = "relative";
         
@@ -44,6 +45,7 @@ class Game {
     }
 
     setLevelParameters(){
+        //Set the Game Parameters w.r.t the Level selected
         switch(this.gameLevel) {
             case "LEVEL1":
               this.targetScore        = 10;
@@ -74,15 +76,18 @@ class Game {
         this.gameScreen.style.display   = "flex";
 
         this.gameIntervalId             = setInterval(()=>{
+            //Start the Game
             this.gameLoop();
         }, this.gameLoopFrecuency);
 
         this.cargoIntervalId            = setInterval(()=>{
+            //Create new Cargos every 2s
             const newCargo  = new Cargo(this.gameScreen, 60, 35);
             this.cargos.push(newCargo);
         }, this.CARGO_SPAWN_INTERVAL);
 
-        this.game60Timer                = setInterval(()=>{
+        this.counterTimerIntervalId           = setInterval(()=>{
+            //Decrement the Game Timer & change the sun images from sun-rise to sun-set
             this.timerCount -= 1;
             this.timerElement.textContent = this.timerCount;
             if (this.timerCount === 40){
@@ -94,14 +99,15 @@ class Game {
         }, 1000);
 
         this.gameTimerId                = setTimeout(()=>{
-            this.gameIsOver = true;
-            this.gameEndPlayScreen.style.display= "flex";
-            this.gameContainer.style.display= "none";
-            this.gameScreen.style.display   = "none";
+            //Close the game in 60s
+            this.gameIsOver                         = true;
+            this.gameTargetDScreen.style.display    = "flex";
+            this.gameContainer.style.display        = "none";
+            this.gameScreen.style.display           = "none";
             clearTimeout(this.gameTimerId);
             clearInterval(this.gameIntervalId);
             clearInterval(this.cargoIntervalId);
-            clearInterval(this.game60Timer);
+            clearInterval(this.counterTimerIntervalId);
         }, 60000);
     }
 
@@ -109,15 +115,29 @@ class Game {
         this.update();
         
         if (this.gameIsOver) {
-            this.gameEndPlay();
+            //Player achieved the Cargo Target
+            this.gameTargetDone();                  
+
+            if(this.player.docked){                 
+                //Stop the sea movement once Ship is docked
+                this.gameScreen.style.animation = 'slide 5s linear 1';
+                
+                clearInterval(this.gameIntervalId);
+                clearInterval(this.cargoIntervalId);
+                clearInterval(this.counterTimerIntervalId);
+            }
         }
     }
 
     update (){
+        //Move the Game elements
         this.player.move();
         this.handleObstacleMove (this.cargos, 'CARGO', this.money);
         this.handleObstacleMove (this.pirates, 'PIRATE', this.steal);
         this.handleObstacleMove (this.missiles, 'MISSILE', this.steal);
+        if(this.port){
+            this.port.move();
+        }
 
         // Create a new Pirate based on a random probability
         // when there is no other Pirate on the screen
@@ -125,10 +145,6 @@ class Game {
             let imgSrc  = '../images/pirate-ship.png';
             const newPirate = new Pirate(this.gameScreen, 80, 150, imgSrc);  
             this.pirates.push(newPirate);
-        }
-
-        if(this.port){
-            this.port.move();
         }
     }
     
@@ -207,9 +223,9 @@ class Game {
         }
     }
 
-    gameEndPlay(){
-        clearInterval(this.game60Timer);
-        this.player.gameEnded = true;
+    gameTargetDone(){
+        clearTimeout(this.gameTimerId);
+        this.player.gameTargetD = true;
         if (this.port){
             return;
         }

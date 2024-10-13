@@ -9,7 +9,7 @@ class Pirate{
         const speedIdx  = Math.floor(Math.random() * speedY.length);
 
         //Randomly select the Pirate return Cargo weight
-        const weight    = [100, 95, 125];
+        const weight    = [100, 95, 125, 250];
         const weightIdx = Math.floor(Math.random() * weight.length);
         
         this.gameScreen = gameScreen;
@@ -33,7 +33,8 @@ class Pirate{
         this.gameScreen.appendChild(this.element);
     }
 
-    move(){
+    move(){    
+        //Move the Pirate position values     
         this.left     += this.directionX;
         this.top      += this.directionY;
         
@@ -41,6 +42,7 @@ class Pirate{
     }
 
     updatePosition(){
+        //Update the Pirate position on the screen
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
     }
@@ -49,7 +51,7 @@ class Pirate{
         const pirateRect    = this.element.getBoundingClientRect();
         const obstacleRect  = obstacle.element.getBoundingClientRect();
 
-        //Check if there is collision
+        //Check if there is collision with the obstacle
         if (
             pirateRect.left < (obstacleRect.right) &&
             pirateRect.right > (obstacleRect.left) &&
