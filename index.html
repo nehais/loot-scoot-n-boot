@@ -72,19 +72,43 @@
                         <h3 id="target-info">0</h3>
                     </div>
                     
-                    <h3>Missiles</h3>
-                    <div id="missiles">
-                        <img src="./images/missile.png" alt="" id="missile1" class="missile">
-                        <img src="./images/missile.png" alt="" id="missile2" class="missile">
-                        <img src="./images/missile.png" alt="" id="missile3" class="missile">
-                        <img src="./images/missile.png" alt="" id="missile4" class="missile">
-                        <img src="./images/missile.png" alt="" id="missile5" class="missile">
+                    <div id="missiles-area">
+                        <h3>Missiles</h3>
+                        <div id="missiles">
+                            <img src="./images/missile.png" alt="" id="missile1" class="missile">
+                            <img src="./images/missile.png" alt="" id="missile2" class="missile">
+                            <img src="./images/missile.png" alt="" id="missile3" class="missile">
+                            <img src="./images/missile.png" alt="" id="missile4" class="missile">
+                            <img src="./images/missile.png" alt="" id="missile5" class="missile">
+                        </div>
                     </div>
+                    
                 </div>
             </div>
 
             <div id="game-screen">
                 <div id="sun-shine"></div>
+                
+                <!-- #game-end-modal is initially hidden using CSS style display: none -->
+                <div id="game-end-modal">
+                    <div id="star-rating">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                    </div>
+                    <div id="rating-info">
+                        <p>Mission failed! Unfortunately, you couldn’t complete the objectives.</p>
+                    </div>
+                    <div>
+                        <h3 id="leaderboard">LEADERBOARD</h3>
+                        <div id="top-scorers">    
+                            <div class="topper" top-value="1"><p>1. Neha</p><p>45s</p></div>    
+                            <div class="topper" top-value="2"><p>2. Arav</p><p>25s</p></div>          
+                            <div class="topper" top-value="3"><p>3. Kian</p><p>15s</p></div>
+                        </div>
+                    </div>
+                    <div><button id="restart-button">Restart</button></div>                
+                </div>
             </div>
 
             <div id="game-option">
@@ -94,12 +118,7 @@
                 <div>
                     <button id="new-game" class="game-buttons">New Game</button>
                 </div>                
-            </div>                
-        </div>
-      
-        <!-- #game-end is initially hidden using CSS style display: none -->
-        <div id="game-end">
-            <button id="restart-button" class="game-buttons">Restart</button>
+            </div>
         </div>
     </main>
 

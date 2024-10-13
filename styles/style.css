@@ -184,21 +184,27 @@ body{
 
 #progressBar {
   height: 20px;
-  background-color: #4caf50;
+  background-color: #54b957;
   width: 0%;
   border-radius: 8px;
   z-index: 111;
 }
 
 #target-info{
-  color: rgb(18, 159, 41);
+  color:  #2d8e30;
   font-size: 1.2em;
   padding-bottom: 2px;
+}
+
+#missiles-area{
+  display: flex;
+  justify-content: center;
 }
 
 #missiles{
   display: flex;
   justify-content: center;
+  margin-left: 15px;
 }
 
 .missile{
@@ -310,7 +316,65 @@ body{
   padding: 10px;
 }
 
-#game-end {
+#game-end-modal{
+  align-self: center;
+  align-items: center;
+
   display: none;
-  justify-content: center;
+  flex-direction: column;
+  align-items:center;
+  
+  color: white;
+  font-size: 1.3em;
+  text-align: center;
+  
+  width: 35vh;
+  height: 55vh;
+  max-width: 500px;
+  max-height: 550px;
+  
+  background-color: #034152cc;
+  border: solid 2px rgb(21, 58, 118);
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  padding: 10px;
+  margin: 20px 50px 50px 50px;
+  z-index: 1000;
+}
+
+#restart-button{
+  background-color: #d1150e8b;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  color: #fffac2;
+  font-size: 1em;
+  margin-top: 50px;
+  padding: 10px 30px;
+}
+
+.star { /* Style for the star icons */
+  font-size: 50px;
+  color: gray;
+}
+
+.highlighted {
+  color: gold;
+}
+
+#leaderboard{
+  background-color: rgba(222, 198, 17, 0.452);
+  letter-spacing: .15em; /* Adjust as needed */ 
+  margin-top: 30px; 
+}
+
+#top-scorers{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.topper{
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: .10em; /* Adjust as needed */  
 }

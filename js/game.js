@@ -10,11 +10,13 @@ class Game {
         this.startScreen        = document.querySelector('#game-intro');
         this.gameScreen         = document.querySelector('#game-screen');
         this.gameContainer      = document.querySelector('#game-container');
-        this.gameTargetDScreen  = document.querySelector('#game-end');
+        this.gameEndScreen      = document.querySelector('#game-end-modal');
         this.targetInfoElement  = document.querySelector('#target-info');
         this.timerElement       = document.querySelector('#timer');
         this.timerAreaElement   = document.querySelector('#timer-area');
         this.sunElement         = document.querySelector('#sun-shine');
+        this.stars              = document.querySelectorAll('.star');
+        this.ratingInfoElement  = document.querySelector('#rating-info');
         this.timerCount         = 60;   //Game Duration
         this.height             = 800;  //Play area height
         this.width              = 700;  //Play area width
@@ -24,10 +26,10 @@ class Game {
         this.missiles           = [];
         this.missilesCount      = 0;
         this.score              = 0;
-        this.gameIsOver         = false;
+        this.gameTargetD        = false;
         this.gameIntervalId     = null;
         this.cargoIntervalId    = null;
-        this.counterTimerIntervalId   = null;
+        this.counterIntervalId  = null;
         this.gameTimerId        = null;
         this.gameLoopFrecuency  = Math.round(1000/60);
         
@@ -86,7 +88,7 @@ class Game {
             this.cargos.push(newCargo);
         }, this.CARGO_SPAWN_INTERVAL);
 
-        this.counterTimerIntervalId           = setInterval(()=>{
+        this.counterIntervalId          = setInterval(()=>{
             //Decrement the Game Timer & change the sun images from sun-rise to sun-set
             this.timerCount -= 1;
             this.timerElement.textContent = this.timerCount;
@@ -100,31 +102,24 @@ class Game {
 
         this.gameTimerId                = setTimeout(()=>{
             //Close the game in 60s
-            this.gameIsOver                         = true;
-            this.gameTargetDScreen.style.display    = "flex";
-            this.gameContainer.style.display        = "none";
-            this.gameScreen.style.display           = "none";
             clearTimeout(this.gameTimerId);
             clearInterval(this.gameIntervalId);
             clearInterval(this.cargoIntervalId);
-            clearInterval(this.counterTimerIntervalId);
+            clearInterval(this.counterIntervalId);
+            this.gameOverScreen();
         }, 60000);
     }
 
     gameLoop (){
         this.update();
         
-        if (this.gameIsOver) {
+        if (this.gameTargetD) {
             //Player achieved the Cargo Target
             this.gameTargetDone();                  
 
             if(this.player.docked){                 
-                //Stop the sea movement once Ship is docked
-                this.gameScreen.style.animation = 'slide 5s linear 1';
-                
+                this.gameOverScreen();                
                 clearInterval(this.gameIntervalId);
-                clearInterval(this.cargoIntervalId);
-                clearInterval(this.counterTimerIntervalId);
             }
         }
     }
@@ -141,7 +136,7 @@ class Game {
 
         // Create a new Pirate based on a random probability
         // when there is no other Pirate on the screen
-        if (Math.random() > this.PIRATE_PROBABILITY_THRESHOLD && this.pirates.length < 1 && !this.gameIsOver) {
+        if (Math.random() > this.PIRATE_PROBABILITY_THRESHOLD && this.pirates.length < 1 && !this.gameTargetD) {
             let imgSrc  = '../images/pirate-ship.png';
             const newPirate = new Pirate(this.gameScreen, 80, 150, imgSrc);  
             this.pirates.push(newPirate);
@@ -208,7 +203,7 @@ class Game {
             this.player.reduceY = 0.15;
         }
         if (progressPercent >= 100){
-            this.gameIsOver = true;
+            this.gameTargetD = true;
         }
     }
 
@@ -216,7 +211,7 @@ class Game {
         if (this.missilesCount > 0){
             this.shoot.play();
             const missileElement         = document.querySelector(`#missile${this.missilesCount}`);
-            missileElement.style.display = 'none';
+            missileElement.style.display = 'none';      //Remove a Missile icon to show missiles left
             this.missilesCount           -= 1;
             const newMissile             = new Missile(this.gameScreen, 10, 20, this.player.top-20, this.player.left + 15);
             this.missiles.push(newMissile);
@@ -224,7 +219,10 @@ class Game {
     }
 
     gameTargetDone(){
-        clearTimeout(this.gameTimerId);
+        clearTimeout(this.gameTimerId);                     //Stop the game timer
+        clearInterval(this.counterIntervalId);
+        clearInterval(this.cargoIntervalId);                //No new Cargos should be created
+        
         this.player.gameTargetD = true;
         if (this.port){
             return;
@@ -233,7 +231,6 @@ class Game {
         this.port = new Port(this.gameScreen, this.width, 700);  
         this.horn.play();                                   //Play horn to indicate Game ended
 
-        clearInterval(this.cargoIntervalId);                //No new Cargos should be created
         for(let i=0 ; i<this.pirates.length ; i++){         //Remove the Pirate
             this.removeElement(this.pirates, i);
         }
@@ -242,5 +239,35 @@ class Game {
         }
         this.sunElement.remove();                           //Remove the Sun
         this.timerAreaElement.remove();                     //Remove the Timer
+    }
+
+    gameOverScreen(){
+        this.sunElement.remove();                           //Remove the Sun
+        
+        //Stop the sea movement once Ship is docked
+        this.gameScreen.style.animation         = 'slide 5s linear 1'
+        this.gameScreen.style.justifyContent    = "center";                
+        this.gameEndScreen.style.display        = "flex";
+        
+        let rating = 0;
+        this.ratingInfoElement.textContent      = "Mission failed! Unfortunately, you couldn’t complete the objectives.";
+        if (this.timerCount >= 40){
+            rating = 3;
+            this.ratingInfoElement.textContent  = "Epic win! You've mastered every challenge and emerged victorious!"; 
+        }else if (this.timerCount >= 20){
+            rating = 2; 
+            this.ratingInfoElement.textContent  = "Fantastic! You outperformed expectations and scored big!";
+        }else if (this.timerCount > 0){
+            rating = 1; 
+            this.ratingInfoElement.textContent  = "Mission completed, but with low rewards. There's potential for a higher score!";
+        }  
+
+        this.stars.forEach(star => {
+            if (star.getAttribute('data-value') <= rating) {
+                star.classList.add('highlighted');
+            } else {
+                star.classList.remove('highlighted');
+            }
+        });
     }
 }
