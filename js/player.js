@@ -1,6 +1,8 @@
 class Player{
     constructor (gameScreen, left, top, width, height, imgSrc, gameHeight, gameWidth){
         this.gameScreen = gameScreen;
+        this.gameEnded  = false;
+        this.docking    = false;
         this.left       = left;
         this.top        = top;
         this.width      = width;
@@ -10,13 +12,13 @@ class Player{
         this.directionX = 0;
         this.directionY = 0;
         this.reduceY    = 0;
-        this.currAngle  = 0;
         this.element    = document.createElement("img");
 
-        this.element.style.left     = `${left}px`;
-        this.element.style.top      = `${top}px`;
-        this.element.style.width    = `${width}px`;
-        this.element.style.height   = `${height}px`;
+        this.element.style.zIndex   = 500;
+        this.element.style.left     = `${this.left}px`;
+        this.element.style.top      = `${this.top}px`;
+        this.element.style.width    = `${this.width}px`;
+        this.element.style.height   = `${this.height}px`;
         this.element.src            = imgSrc; 
         this.element.style.position = "absolute";
         this.element.classList.add('ship-rotate');
@@ -26,7 +28,7 @@ class Player{
 
     move(){        
         //Move the player ship position values within the screen 
-        if (this.directionY !== 0){
+        if ((this.directionY !== 0) && (this.directionY !== -1)){
             this.directionY -= this.reduceY;
         }
         
@@ -36,9 +38,33 @@ class Player{
         if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if ((newTop <= this.gameHeight) && (newTop >= 0)){
+        if (((newTop <= this.gameHeight) && (newTop >= 0)) && !this.gameEnded){
             this.top = newTop;
         }
+        if (this.gameEnded && !this.docking){
+            this.directionY = -4;
+
+            if (this.top <= -this.height){ 
+                this.docking                = true;
+                this.rotatePlayer(0);
+                this.element.src            = '../images/ship.png'
+                this.directionY             = -1;    
+                this.left                   = 130;
+                this.top                    = this.gameHeight;
+                this.element.style.top      = `${this.gameHeight + (this.height * 1.8)}px`;
+                this.element.style.width    = `${this.width * 1.5}px`;
+                this.element.style.height   = `${this.height * 1.8}px`;
+            }  
+            this.top  += this.directionY;
+        }
+        if (this.docking){    
+            this.left                       = 130;
+            let newTop  = this.top  + this.directionY;    
+            if (((newTop >= 295))){
+                this.top = newTop;
+            }
+        }
+
         this.updatePosition();
     }
 
@@ -65,7 +91,6 @@ class Player{
     }
 
     rotatePlayer(angle) {
-        this.currAngle += angle;
         this.element.style.transform = `rotate(${angle}deg)`;
     }
 }

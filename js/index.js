@@ -3,6 +3,7 @@ window.onload = function () {
     const helpScreen    = document.querySelector('#game-help');    
     const startButton   = document.getElementById("start-button");
     const restartButton = document.getElementById("restart-button");
+    const newButton     = document.getElementById("new-game");
     const helpButton    = document.getElementById("help-button");
     const backButton    = document.getElementById("back-button");
     const level1        = document.getElementById("level1");
@@ -71,7 +72,10 @@ window.onload = function () {
     //Check if arrow keys were pressed
     document.body.addEventListener("keydown", keyDownPressed);
     function keyDownPressed(e) {
-      if (e.keyCode == '38') {// up arrow
+      if(scootGame.gameIsOver){
+        return;
+      }
+      else if (e.keyCode == '38') {// up arrow
         scootGame.player.directionY -= 0.5;
       }
       else if (e.keyCode == '40') {// down arrow
@@ -94,7 +98,10 @@ window.onload = function () {
     function keyUpPressed(e) {      
       scootGame.player.rotatePlayer(0);
 
-      if (e.keyCode == '38') {// up arrow
+      if(scootGame.gameIsOver){
+        return;
+      }
+      else if (e.keyCode == '38') {// up arrow
         scootGame.player.directionY = 0;
       }
       else if (e.keyCode == '40') {// down arrow
@@ -107,6 +114,11 @@ window.onload = function () {
         scootGame.player.directionX = 0;
       }
     }
+
+    //Reload the game on click of new button
+    newButton.addEventListener("click", function () {
+      location.reload();
+    });
 
     //Reload the game on click of restart button
     restartButton.addEventListener("click", function () {
