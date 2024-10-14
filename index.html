@@ -18,21 +18,21 @@
             <div id="levels">
                 <div id="level1" class="level-class">
                     <div><h2>BEGINNER</h2></div>
-                    <h3>Cargo Target : 500</h3>
+                    <h3>Cargo Target : 250</h3>
                     <h3>Ship Missiles : 5</h3>
-                    <h3>Collision Damage : 100 Cargos</h3>
+                    <h3>Collision Damage : 50 Cargos</h3>
                 </div>
 
                 <div id="level2" class="level-class">
                     <div><h2>INTERMEDIATE</h2></div>
-                    <h3>Cargo Target : 1000</h3>
+                    <h3>Cargo Target : 500</h3>
                     <h3>Ship Missiles : 3</h3>
-                    <h3>Collision Damage : 500 Cargos</h3>
+                    <h3>Collision Damage : 200 Cargos</h3>
                 </div>
 
                 <div id="level3" class="level-class">
                     <div><h2>EXPERT</h2></div>
-                    <h3>Cargo Target : 2000</h3>
+                    <h3>Cargo Target : 1000</h3>
                     <h3>Ship Missiles : 2</h3>
                     <h3>Collision Damage : All Cargos</h3>
                 </div>
@@ -44,18 +44,20 @@
         <!-- #game-help is initially hidden using CSS style display: none -->
         <div id="game-help"> 
             <div id="story">
-                <p>A Cargo ship has crashed & the Cargos are scattered all over the sea. The Pirates are on loose looting the Cargos.
-                    You are deployed with armed ship to collect the Target Cargos before the sun sets.</p>
+                <p>A cargo ship has wrecked, leaving its valuable goods scattered across the sea. 
+                    Pirates are on the loose, looting them. 
+                    You’ve been deployed on an armed ship with one mission: recover the target cargos before the sun sets. 
+                    The race is on against time and the pirates. Will you succeed?</p>
             </div>
             <div id="help-info">
                 <h2>Game Instructions</h2>
-                <h3>Use arrow keys to navigate the Ship</h3>
-                <h3>Collect Cargo by landing on it</h3>
-                <h3>No. on the Cargo shows collection Weight</h3>
-                <h3>1/2 way to the Target the Ship speed will decrease</h3>
-                <h3>Collision with the Pirate ship has Collision Damage</h3>
-                <h3>Shoot the Pirate ship down with spacebar</h3>
-                <h3>Shoot down Pirate ship will return HUGE Cargo</h3>
+                <h3>Use the arrow keys to navigate your ship.</h3>
+                <h3>Land on cargo to collect it.</h3>
+                <h3>The number on the cargo indicates its weight.</h3>
+                <h3>When halfway to the target, your ship's speed will decrease.</h3>
+                <h3>Colliding with a pirate ship has Collision Damage</h3>
+                <h3>Press the spacebar to shoot down pirate ships.</h3>
+                <h3>Shooting down a pirate ship will reward you with a HUGE cargo.</h3>
             </div>
             <button id="back-button" class="helper-button mouse-over">Back</button>  
         </div>
@@ -64,7 +66,7 @@
         <div id="game-container">
             <div>        
                 <div id="stats"> 
-                    <h3>Cargo Weight Collected</h3>
+                    <h3>Collected Cargo Weight</h3>
                     <div id="progress-area">
                         <div id="progress">
                             <div id="progressBar"></div>
@@ -75,11 +77,11 @@
                     <div id="missiles-area">
                         <h3>Missiles</h3>
                         <div id="missiles">
-                            <img src="./images/missile.png" alt="" id="missile1" class="missile">
-                            <img src="./images/missile.png" alt="" id="missile2" class="missile">
-                            <img src="./images/missile.png" alt="" id="missile3" class="missile">
-                            <img src="./images/missile.png" alt="" id="missile4" class="missile">
-                            <img src="./images/missile.png" alt="" id="missile5" class="missile">
+                            <img src="./images/missile.png" alt="" id="missile1" class="missile" data-value="1">
+                            <img src="./images/missile.png" alt="" id="missile2" class="missile" data-value="2">
+                            <img src="./images/missile.png" alt="" id="missile3" class="missile" data-value="3">
+                            <img src="./images/missile.png" alt="" id="missile4" class="missile" data-value="4">
+                            <img src="./images/missile.png" alt="" id="missile5" class="missile" data-value="5">
                         </div>
                     </div>
                     
@@ -87,10 +89,20 @@
             </div>
 
             <div id="game-screen">
+                <div id="start-timer-area">
+                    <h3 id="game-start-timer">3</h3>                    
+                </div>
+
+                <div class="overlay" id="overlay"></div>
+                <div class="popup" id="popup">
+                    Success! Target achieved. Docking the ship.
+                </div>
+
                 <div id="sun-shine"></div>
                 
                 <!-- #game-end-modal is initially hidden using CSS style display: none -->
                 <div id="game-end-modal">
+                    <div id="final-score">40s</div>
                     <div id="star-rating">
                         <span class="star" data-value="1">&#9733;</span>
                         <span class="star" data-value="2">&#9733;</span>

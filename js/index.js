@@ -72,7 +72,7 @@ window.onload = function () {
     //Check if arrow keys were pressed
     document.body.addEventListener("keydown", keyDownPressed);
     function keyDownPressed(e) {
-      if(scootGame.gameIsOver){
+      if(scootGame.gameTargetD){
         return;
       }
       else if (e.keyCode == '38') {// up arrow

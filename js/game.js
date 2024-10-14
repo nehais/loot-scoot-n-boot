@@ -11,13 +11,14 @@ class Game {
         this.gameScreen         = document.querySelector('#game-screen');
         this.gameContainer      = document.querySelector('#game-container');
         this.gameEndScreen      = document.querySelector('#game-end-modal');
+        this.gameStartTimer     = document.querySelector('#game-start-timer');
         this.targetInfoElement  = document.querySelector('#target-info');
         this.timerElement       = document.querySelector('#timer');
         this.timerAreaElement   = document.querySelector('#timer-area');
         this.sunElement         = document.querySelector('#sun-shine');
-        this.stars              = document.querySelectorAll('.star');
         this.ratingInfoElement  = document.querySelector('#rating-info');
         this.timerCount         = 60;   //Game Duration
+        this.gameStartCount     = 3;
         this.height             = 800;  //Play area height
         this.width              = 700;  //Play area width
         this.port               = null;
@@ -50,13 +51,13 @@ class Game {
         //Set the Game Parameters w.r.t the Level selected
         switch(this.gameLevel) {
             case "LEVEL1":
-              this.targetScore        = 250;
-              this.pirateStealWeight  = 100;
+              this.targetScore        = 50;
+              this.pirateStealWeight  = 50;
               this.missilesCount      = 5;
               break;
             case "LEVEL2":
               this.targetScore        = 500;
-              this.pirateStealWeight  = 500;
+              this.pirateStealWeight  = 200;
               this.missilesCount      = 3;
               break;            
             case "LEVEL3":
@@ -66,21 +67,21 @@ class Game {
               break;
         }
         this.targetInfoElement.textContent  = this.targetScore;
+          
+        let missiles = document.querySelectorAll('.missile');
+        missiles.forEach(missile => {
+            if (missile.getAttribute('data-value') > this.missilesCount) {
+                missile.remove();
+            } 
+        });
     }
 
-    start (){
-        this.horn.play();              //Play Horn sound for game start
-                
+    start (){        
         this.gameScreen.style.height    = `${this.height}px`;
         this.gameScreen.style.width     = `${this.width}px`;
         this.startScreen.style.display  = "none";
         this.gameContainer.style.display= "flex";
         this.gameScreen.style.display   = "flex";
-
-        this.gameIntervalId             = setInterval(()=>{
-            //Start the Game
-            this.gameLoop();
-        }, this.gameLoopFrecuency);
 
         this.cargoIntervalId            = setInterval(()=>{
             //Create new Cargos every 2s
@@ -90,7 +91,10 @@ class Game {
 
         this.counterIntervalId          = setInterval(()=>{
             //Decrement the Game Timer & change the sun images from sun-rise to sun-set
-            this.timerCount -= 1;
+            if (this.gameStartCount === 0){
+                this.timerCount -= 1;
+            }
+            
             this.timerElement.textContent = this.timerCount;
             if (this.timerCount === 40){
                 this.sunElement.style.backgroundImage = `url('../images/sun/sun-mid.png')`;
@@ -106,6 +110,26 @@ class Game {
                 this.gameOverScreen();
                 this.sink.play();
             }
+        }, 1000);
+
+        const sec3IntervalId          = setInterval(()=>{
+            this.horn.play();              //Play Horn sound for game start
+            //Count down 3s for game to start
+            this.gameStartCount -=1;
+            if (this.gameStartCount === 0){
+                
+                this.gameStartTimer.remove();
+                
+                this.gameScreen.style.justifyContent    = "flex-end";
+                this.sunElement.style.display           = "block"; 
+                this.gameScreen.style.animation         = "slide 5s linear infinite";
+                clearInterval(sec3IntervalId);
+                this.gameIntervalId                     = setInterval(()=>{
+                    //Start the Game
+                    this.gameLoop();
+                }, this.gameLoopFrecuency);
+            } 
+            this.gameStartTimer.textContent = this.gameStartCount;
         }, 1000);
     }
 
@@ -223,6 +247,14 @@ class Game {
     }
 
     gameTargetDone(){
+        document.getElementById('popup').style.display = 'block'; // Show the popup
+        document.getElementById('overlay').style.display = 'block'; // Show the overlay
+        const sec3TimeOut = setTimeout (()=>{
+            document.getElementById('popup').style.display = 'none'; // Hide the popup
+            document.getElementById('overlay').style.display = 'none'; // Hide the overlay
+            clearTimeout(sec3TimeOut);
+        }, 4000);
+
         clearInterval(this.counterIntervalId);          //Stop the game timer
         clearInterval(this.cargoIntervalId);            //No new Cargos should be created
         
@@ -265,7 +297,9 @@ class Game {
             this.ratingInfoElement.textContent  = "Mission completed, but with low rewards. There's potential for a higher score!";
         }  
 
-        this.stars.forEach(star => {
+        
+        let stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
             if (star.getAttribute('data-value') <= rating) {
                 star.classList.add('highlighted');
             } else {
