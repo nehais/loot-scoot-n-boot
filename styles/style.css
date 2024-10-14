@@ -21,6 +21,18 @@ body{
   width: 200px;
   top: 20vh;
   left: 100vh;
+  scale: 1;
+  animation: blink-s 1.5s infinite
+}
+
+/* Blinking keyframes */
+@keyframes blink-s {
+  0%, 100% {
+    scale: 1;
+  }
+  50% {
+    scale: 0.95;
+  }
 }
 
 #missile-logo{
@@ -60,9 +72,9 @@ body{
   background-color: rgba(32, 71, 83, 0.7) ;
 }
 
-.game-buttons:hover, #help:hover{
+.mouse-over:hover{
   transform: scale(1.2);
-  transition: transform 1s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .game-buttons{
@@ -257,6 +269,16 @@ body{
   animation: blink 1.5s infinite, scaleDown 60s forwards;; 
 }
 
+/* Blinking keyframes */
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.3;
+  }
+}
+
 /* Keyframe animation to scale down the div */
 @keyframes scaleDown {
   0% {
@@ -294,16 +316,6 @@ body{
 #timer{
   text-align: center;
   font-size: 1.3em;
-}
-
-/* Blinking keyframes */
-@keyframes blink {
-  0%, 100% {
-      opacity: 1;
-  }
-  50% {
-      opacity: 0.3;
-  }
 }
 
 #new-game{
@@ -377,4 +389,5 @@ body{
   display: flex;
   justify-content: space-between;
   letter-spacing: .10em; /* Adjust as needed */  
+  line-height: 0.1em;
 }

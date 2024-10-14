@@ -26,16 +26,16 @@ class Game {
         this.missiles           = [];
         this.missilesCount      = 0;
         this.score              = 0;
+        this.highScores         = [];
         this.gameTargetD        = false;
         this.gameIntervalId     = null;
         this.cargoIntervalId    = null;
         this.counterIntervalId  = null;
-        this.gameTimerId        = null;
         this.gameLoopFrecuency  = Math.round(1000/60);
         
         this.gameScreen.style.position = "relative";
         
-        let imgSrc  = '../images/ship-trail.png';
+        let imgSrc  = '../images/ship-trail-empty.png';
         this.player = new Player(this.gameScreen, (this.width/2 - 50), (this.height - 100), 50, 200, imgSrc, this.height, this.width);    
         
         this.horn   = new Audio('../sounds/horn.wav');
@@ -50,17 +50,17 @@ class Game {
         //Set the Game Parameters w.r.t the Level selected
         switch(this.gameLevel) {
             case "LEVEL1":
-              this.targetScore        = 10;
+              this.targetScore        = 250;
               this.pirateStealWeight  = 100;
               this.missilesCount      = 5;
               break;
             case "LEVEL2":
-              this.targetScore        = 1000;
+              this.targetScore        = 500;
               this.pirateStealWeight  = 500;
               this.missilesCount      = 3;
               break;            
             case "LEVEL3":
-              this.targetScore        = 2000;
+              this.targetScore        = 1000;
               this.pirateStealWeight  = 500000;
               this.missilesCount      = 2;
               break;
@@ -98,16 +98,15 @@ class Game {
             else if (this.timerCount === 25){
                 this.sunElement.style.backgroundImage = `url('../images/sun/sun-set.png')`;
             }
+            else if (this.timerCount === 0){
+                //Close the game in 60s
+                clearInterval(this.gameIntervalId);
+                clearInterval(this.cargoIntervalId);
+                clearInterval(this.counterIntervalId);
+                this.gameOverScreen();
+                this.sink.play();
+            }
         }, 1000);
-
-        this.gameTimerId                = setTimeout(()=>{
-            //Close the game in 60s
-            clearTimeout(this.gameTimerId);
-            clearInterval(this.gameIntervalId);
-            clearInterval(this.cargoIntervalId);
-            clearInterval(this.counterIntervalId);
-            this.gameOverScreen();
-        }, 60000);
     }
 
     gameLoop (){
@@ -118,7 +117,8 @@ class Game {
             this.gameTargetDone();                  
 
             if(this.player.docked){                 
-                this.gameOverScreen();                
+                this.gameOverScreen();
+                this.money.play();                
                 clearInterval(this.gameIntervalId);
             }
         }
@@ -195,9 +195,13 @@ class Game {
     }
 
     setProgress(){
+        const cargosBar   = document.querySelector("#cargos");
         const progressBar = document.querySelector("#progressBar");
-        const progressPercent = (this.score / this.targetScore) * 100;
+        let progressPercent     = (this.score / this.targetScore) * 100;
+        progressPercent         = ((progressPercent > 100) ? 100 : progressPercent);
         progressBar.style.width = `${progressPercent}%`; 
+        cargosBar.style.width   = `${progressPercent * 0.8}%`; 
+        cargosBar.style.height  = `${progressPercent * 0.9}%`; 
 
         if (progressPercent >= 50){
             this.player.reduceY = 0.15;
@@ -219,9 +223,8 @@ class Game {
     }
 
     gameTargetDone(){
-        clearTimeout(this.gameTimerId);                     //Stop the game timer
-        clearInterval(this.counterIntervalId);
-        clearInterval(this.cargoIntervalId);                //No new Cargos should be created
+        clearInterval(this.counterIntervalId);          //Stop the game timer
+        clearInterval(this.cargoIntervalId);            //No new Cargos should be created
         
         this.player.gameTargetD = true;
         if (this.port){
@@ -229,20 +232,20 @@ class Game {
         }
 
         this.port = new Port(this.gameScreen, this.width, 700);  
-        this.horn.play();                                   //Play horn to indicate Game ended
+        this.horn.play();                               //Play horn to indicate Game ended
 
-        for(let i=0 ; i<this.pirates.length ; i++){         //Remove the Pirate
+        for(let i=0 ; i<this.pirates.length ; i++){     //Remove the Pirate
             this.removeElement(this.pirates, i);
         }
-        for(let i=0 ; i<this.cargos.length ; i++){          //Remove the Cargos
+        for(let i=0 ; i<this.cargos.length ; i++){      //Remove the Cargos
             this.removeElement(this.cargos, i);
         }
-        this.sunElement.remove();                           //Remove the Sun
-        this.timerAreaElement.remove();                     //Remove the Timer
+        this.sunElement.remove();                       //Remove the Sun
+        this.timerAreaElement.remove();                 //Remove the Timer
     }
 
     gameOverScreen(){
-        this.sunElement.remove();                           //Remove the Sun
+        this.sunElement.remove();                       //Remove the Sun
         
         //Stop the sea movement once Ship is docked
         this.gameScreen.style.animation         = 'slide 5s linear 1'

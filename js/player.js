@@ -13,17 +13,33 @@ class Player{
         this.directionX = 0;
         this.directionY = 0;
         this.reduceY    = 0;
-        this.element    = document.createElement("img");
 
-        this.element.style.zIndex   = 500;
-        this.element.style.left     = `${this.left}px`;
-        this.element.style.top      = `${this.top}px`;
-        this.element.style.width    = `${this.width}px`;
-        this.element.style.height   = `${this.height}px`;
-        this.element.src            = imgSrc; 
-        this.element.style.position = "absolute";
+        
+        this.element                        = document.createElement("div");
+        this.element.style.backgroundImage  = `url('${imgSrc}')`; 
+        this.element.style.backgroundRepeat = "no-repeat"; 
+        this.element.style.backgroundSize   = "cover";
+        this.element.style.position         = "absolute";
+        this.element.style.zIndex           = 500;
+        this.element.style.left             = `${this.left}px`;
+        this.element.style.top              = `${this.top}px`;
+        this.element.style.width            = `${this.width}px`;
+        this.element.style.height           = `${this.height}px`;
         this.element.classList.add('ship-rotate');
         
+        this.elementCargo                   = document.createElement("div");
+        this.elementCargo.id                = 'cargos'; 
+        this.elementCargo.style.backgroundImage  = `url('../images/cargos.png')`; 
+        this.elementCargo.style.position    = "absolute"; 
+        this.elementCargo.style.backgroundRepeat = "no-repeat"; 
+        this.elementCargo.style.backgroundSize   = "contain";
+        this.elementCargo.style.zIndex      = 600;
+        this.elementCargo.style.width       = `${0}%`;
+        this.elementCargo.style.height      = `${0}%` //`${this.height * 0.40}px`;
+        this.elementCargo.style.left        = `${5}px`;
+        this.elementCargo.style.top         = `${this.height * 0.25}px`;
+
+        this.element.appendChild(this.elementCargo);       
         this.gameScreen.appendChild(this.element);
     }
 
@@ -55,13 +71,16 @@ class Player{
                 //Ship is off screen
                 //Increase Ship size & position it down to bring it up for Docking 
                 this.docking                = true;
-                this.element.src            = '../images/ship.png'  //Use no running Ship image
+                
+                this.element.style.backgroundImage  = `url('../images/ship.png' )`; //Use no running Ship image
+                this.element.style.backgroundImage
+                this.elementCargo.remove();
                 this.directionY             = -1;                   //Slow down to dock
-                this.left                   = 130;                  //Locking yard position
+                this.left                   = 110;                  //Locking yard position
                 this.top                    = this.gameHeight;
                 this.element.style.top      = `${this.gameHeight + (this.height * 1.8)}px`;
-                this.element.style.width    = `${this.width * 1.5}px`;
-                this.element.style.height   = `${this.height * 1.8}px`;
+                this.element.style.width    = `${this.width * 1.35}px`;
+                this.element.style.height   = `${this.height * 1.35}px`;
             }  
             this.top  += this.directionY;
         }
