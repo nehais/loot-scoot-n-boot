@@ -535,7 +535,7 @@ body{
   #up {
     border: none;
     background-color: transparent;
-    background-image: url('../images/right.png');
+    background-image: url('../images/up.png');
     background-size: cover;
     background-position: center;
     padding: 0;
