@@ -121,6 +121,62 @@ window.onload = function () {
       }
     }
 
+    //Mobile version: Check if arrows were touched
+    document.getElementById('left').addEventListener('touchstart', () => arrowTouched('LEFT'));
+    document.getElementById('left').addEventListener('touchend', () =>  arrowRemoved('LEFT'));
+
+    document.getElementById('up').addEventListener('touchstart', () => arrowTouched('UP'));
+    document.getElementById('up').addEventListener('touchend', () => arrowRemoved('UP'));
+
+    document.getElementById('right').addEventListener('touchstart', () => arrowTouched('RIGHT'));
+    document.getElementById('right').addEventListener('touchend', () => arrowRemoved('RIGHT'));
+
+    document.getElementById('down').addEventListener('touchstart', () => arrowTouched('DOWN'));
+    document.getElementById('down').addEventListener('touchend', () => arrowRemoved('DOWN')); 
+
+    function arrowTouched(arrow) {
+      if(scootGame.gameTargetD){
+        return;
+      }
+      else if (arrow == 'UP') {// up arrow
+        scootGame.player.directionY -= 0.5;
+      }
+      else if (arrow == 'DOWN') {// down arrow
+        scootGame.player.directionY += 0.5;
+      }
+      else if (arrow == 'LEFT') {// left arrow
+        scootGame.player.directionX -= 0.5;
+        scootGame.player.rotatePlayer(-25);
+      }
+      else if (arrow == 'RIGHT') {// right arrow
+        scootGame.player.directionX += 0.5;
+        scootGame.player.rotatePlayer(25);
+      }
+      else if (arrow == '32') {// spacebar          TODO
+        scootGame.shootMissile();
+      }
+    }
+
+    function arrowRemoved(arrow) {
+      scootGame.player.rotatePlayer(0);
+
+      if(scootGame.gameIsOver){
+        return;
+      }
+      else if (arrow == 'UP') {// up arrow
+        scootGame.player.directionY = 0;
+      }
+      else if (arrow == 'DOWN') {// down arrow
+        scootGame.player.directionY = 0;
+      }
+      else if (arrow == 'LEFT') {// left arrow
+        scootGame.player.directionX = 0;
+      }
+      else if (arrow == 'RIGHT') {// right arrow
+        scootGame.player.directionX = 0;
+      }
+    }
+
     //Reload the game on click of new button
     newButton.addEventListener("click", function () {
       location.reload();

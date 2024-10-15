@@ -397,7 +397,7 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   padding: 10px;
   margin: 20px 50px 50px 50px;
-  z-index: 1000;
+  z-index: 1500;
 }
 
 #restart-button{
@@ -504,6 +504,7 @@ body{
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
+    z-index: 2000;
   }
   
   #controls button {
