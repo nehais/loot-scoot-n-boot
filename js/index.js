@@ -135,6 +135,8 @@ window.onload = function () {
     document.getElementById('down').addEventListener('touchstart', () => arrowTouched('DOWN'));
     document.getElementById('down').addEventListener('touchend', () => arrowRemoved('DOWN')); 
 
+    document.getElementById('shoot').addEventListener('click', () => arrowTouched('SHOOT'));
+
     function arrowTouched(arrow) {
       if(scootGame.gameTargetD){
         return;
@@ -153,7 +155,7 @@ window.onload = function () {
         scootGame.player.directionX += 0.5;
         scootGame.player.rotatePlayer(25);
       }
-      else if (arrow == '32') {// spacebar          TODO
+      else if (arrow == 'SHOOT') {// missile icon
         scootGame.shootMissile();
       }
     }

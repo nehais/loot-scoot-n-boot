@@ -82,7 +82,8 @@ body{
 #name{
   font-size: 1em;
   line-height: 0.1em;
-  margin-right: 10px;
+  margin: 0 10px 0 10px;
+  padding-left: 10px;
 }
 .mouse-over:hover{
   transform: scale(1.2);
@@ -548,7 +549,17 @@ body{
     background-size: cover;
     background-position: center;
     padding: 0;
-  }  
+  }
+     
+  #shoot {
+    border: none;
+    background-color: transparent;
+    background-image: url('../images/missile.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0;
+  }   
 
   .image-button {
     /* Prevent long press saving the image */
@@ -573,6 +584,7 @@ body{
 
   .level-class{
     margin: 25px 0 0 0;
+    transform: scale(0.75)
   }
 
   #game-container{

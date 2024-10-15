@@ -243,7 +243,7 @@ class Game {
     }
 
     shootMissile(){
-        if (this.missilesCount > 0){
+        if ((this.missilesCount > 0) && (this.gameStartCount === 0)){
             this.shoot.play();
             const missileElement         = document.querySelector(`#missile${this.missilesCount}`);
             missileElement.style.display = 'none';      //Remove a Missile icon to show missiles left
