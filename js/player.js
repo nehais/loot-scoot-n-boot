@@ -56,7 +56,7 @@ class Player{
         if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if (((newTop <= this.gameHeight + 50) && (newTop >= 0)) && !this.gameTargetD){
+        if (((newTop <= this.gameHeight - 50) && (newTop >= 0)) && !this.gameTargetD){
             this.top = newTop;
         }
 
