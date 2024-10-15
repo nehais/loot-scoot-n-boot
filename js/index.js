@@ -3,7 +3,8 @@ window.onload = function () {
     const helpScreen    = document.querySelector('#game-help');    
     const startButton   = document.getElementById("start-button");
     const restartButton = document.getElementById("restart-button");
-    const newButton     = document.querySelector(".new-game");
+    const newButton1    = document.getElementById("new-game1");
+    const newButton2    = document.getElementById("new-game2");
     const helpButton    = document.getElementById("help-button");
     const backButton    = document.getElementById("back-button");
     const level1        = document.getElementById("level1");
@@ -178,7 +179,10 @@ window.onload = function () {
     }
 
     //Reload the game on click of new button
-    newButton.addEventListener("click", function () {
+    newButton1.addEventListener("click", function () {
+      location.reload();
+    });
+    newButton2.addEventListener("click", function () {
       location.reload();
     });
 
