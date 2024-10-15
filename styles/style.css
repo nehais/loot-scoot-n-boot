@@ -495,7 +495,7 @@ body{
     align-items: center;
   }
 
-  .new-game{
+  #new-game1{
     margin-left: 0px;
   }
 
@@ -578,13 +578,23 @@ body{
     width: 10vh;
   }
 
+  #game-intro{
+    height: 80%;
+  }
+
   #levels{
     flex-direction: column;
   }
 
   .level-class{
-    margin: 25px 0 0 0;
-    transform: scale(0.75)
+    margin: 10px 0 0 0;
+    width: 90%;
+    h2{
+      font-size: 2vh;
+    }
+    h3{
+      font-size: 1.5vh;
+    }
   }
 
   #game-container{
@@ -602,9 +612,7 @@ body{
   #game-left-area{
     margin: 0;
     flex-direction: row;
-    transform: scale(0.75);
     justify-content: space-between;
-    width: 100%;
   }
   
   #game-option1 {
@@ -612,7 +620,7 @@ body{
   }
 
   #stats{
-    margin-left: 100px;
+    margin-left: 50px;
   } 
 
   #stat-label {

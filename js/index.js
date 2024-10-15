@@ -142,17 +142,17 @@ window.onload = function () {
         return;
       }
       else if (arrow == 'UP') {// up arrow
-        scootGame.player.directionY -= 0.5;
+        scootGame.player.directionY -= 1.5;
       }
       else if (arrow == 'DOWN') {// down arrow
-        scootGame.player.directionY += 0.5;
+        scootGame.player.directionY += 1.5;
       }
       else if (arrow == 'LEFT') {// left arrow
-        scootGame.player.directionX -= 0.5;
+        scootGame.player.directionX -= 1.5;
         scootGame.player.rotatePlayer(-25);
       }
       else if (arrow == 'RIGHT') {// right arrow
-        scootGame.player.directionX += 0.5;
+        scootGame.player.directionX += 1.5;
         scootGame.player.rotatePlayer(25);
       }
       else if (arrow == 'SHOOT') {// missile icon
