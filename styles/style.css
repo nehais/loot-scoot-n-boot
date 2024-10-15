@@ -549,6 +549,16 @@ body{
     background-position: center;
     padding: 0;
   }  
+
+  .image-button {
+    /* Prevent long press saving the image */
+    -webkit-touch-callout: none;  /* iOS Safari */
+    -webkit-user-select: none;    /* Safari */
+    -khtml-user-select: none;     /* Konqueror HTML */
+    -moz-user-select: none;       /* Old versions of Firefox */
+    -ms-user-select: none;        /* Internet Explorer/Edge */
+    user-select: none;            /* Non-prefixed version, supported by modern browsers */
+  }
 }
 
 @media screen and (max-device-width: 425px) {  
