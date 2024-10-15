@@ -1,11 +1,12 @@
 class Game {
-    constructor (gameLevel){
+    constructor (gameLevel, playerName){
         this.CARGO_SPAWN_INTERVAL         = 2000;
         this.PIRATE_PROBABILITY_THRESHOLD = 0.98;
 
         this.pirateStealWeight  = 0;
         this.targetScore        = 0;
         this.gameLevel          = gameLevel;
+        this.playerName         = playerName;
         
         this.startScreen        = document.querySelector('#game-intro');
         this.gameScreen         = document.querySelector('#game-screen');
@@ -13,14 +14,15 @@ class Game {
         this.gameEndScreen      = document.querySelector('#game-end-modal');
         this.gameStartTimer     = document.querySelector('#game-start-timer');
         this.targetInfoElement  = document.querySelector('#target-info');
-        this.timerElement       = document.querySelector('#timer');
+        this.timerElement1      = document.querySelector('#timer1');
+        this.timerElement2      = document.querySelector('#timer2');
         this.timerAreaElement   = document.querySelector('#timer-area');
         this.sunElement         = document.querySelector('#sun-shine');
         this.ratingInfoElement  = document.querySelector('#rating-info');
         this.timerCount         = 60;   //Game Duration
-        this.gameStartCount     = 3;
-        this.height             = 800;  //Play area height
-        this.width              = 700;  //Play area width
+        this.gameStartCount     = 3;        
+        this.height             = 0;    //Play area height
+        this.width              = 0;    //Play area width
         this.port               = null;
         this.pirates            = [];
         this.cargos             = [];
@@ -36,14 +38,11 @@ class Game {
         
         this.gameScreen.style.position = "relative";
         
-        let imgSrc  = '../images/ship-trail-empty.png';
-        this.player = new Player(this.gameScreen, (this.width/2 - 50), (this.height - 100), 50, 200, imgSrc, this.height, this.width);    
-        
-        this.horn   = new Audio('../sounds/horn.wav');
-        this.money  = new Audio('../sounds/money.wav');
-        this.sink   = new Audio('../sounds/sink.wav');
-        this.steal  = new Audio('../sounds/steal.flac');
-        this.shoot  = new Audio('../sounds/shoot.wav');
+        this.horn   = new Audio('sounds/horn.wav');
+        this.money  = new Audio('sounds/money.wav');
+        this.sink   = new Audio('sounds/sink.wav');
+        this.steal  = new Audio('sounds/steal.flac');
+        this.shoot  = new Audio('sounds/shoot.wav');
         this.setLevelParameters();
     }
 
@@ -61,7 +60,7 @@ class Game {
               this.missilesCount      = 3;
               break;            
             case "LEVEL3":
-              this.targetScore        = 1000;
+              this.targetScore        = 10;
               this.pirateStealWeight  = 500000;
               this.missilesCount      = 2;
               break;
@@ -77,11 +76,17 @@ class Game {
     }
 
     start (){        
-        this.gameScreen.style.height    = `${this.height}px`;
-        this.gameScreen.style.width     = `${this.width}px`;
         this.startScreen.style.display  = "none";
         this.gameContainer.style.display= "flex";
         this.gameScreen.style.display   = "flex";
+
+        //Get the screen size
+        this.height             = this.gameScreen.clientHeight;  //Play area height
+        this.width              = this.gameScreen.clientWidth;   //Play area width
+        
+        //Create Player Ship Element
+        let imgSrc  = 'images/ship-trail-empty.png';
+        this.player = new Player(this.gameScreen, (this.width/2 - 50), (this.height - 100), 50, 200, imgSrc, this.height, this.width);    
 
         this.cargoIntervalId            = setInterval(()=>{
             //Create new Cargos every 2s
@@ -95,19 +100,21 @@ class Game {
                 this.timerCount -= 1;
             }
             
-            this.timerElement.textContent = this.timerCount;
+            this.timerElement1.textContent = this.timerCount;
+            this.timerElement2.textContent = this.timerCount;
+            
             if (this.timerCount === 40){
-                this.sunElement.style.backgroundImage = `url('../images/sun/sun-mid.png')`;
+                this.sunElement.style.backgroundImage = `url('images/sun/sun-mid.png')`;
             }
             else if (this.timerCount === 25){
-                this.sunElement.style.backgroundImage = `url('../images/sun/sun-set.png')`;
+                this.sunElement.style.backgroundImage = `url('images/sun/sun-set.png')`;
             }
             else if (this.timerCount === 0){
                 //Close the game in 60s
                 clearInterval(this.gameIntervalId);
                 clearInterval(this.cargoIntervalId);
                 clearInterval(this.counterIntervalId);
-                this.gameOverScreen();
+                this.gameOverScreen('LOST');
                 this.sink.play();
             }
         }, 1000);
@@ -141,7 +148,7 @@ class Game {
             this.gameTargetDone();                  
 
             if(this.player.docked){                 
-                this.gameOverScreen();
+                this.gameOverScreen('WON');
                 this.money.play();                
                 clearInterval(this.gameIntervalId);
             }
@@ -161,7 +168,7 @@ class Game {
         // Create a new Pirate based on a random probability
         // when there is no other Pirate on the screen
         if (Math.random() > this.PIRATE_PROBABILITY_THRESHOLD && this.pirates.length < 1 && !this.gameTargetD) {
-            let imgSrc  = '../images/pirate-ship.png';
+            let imgSrc  = 'images/pirate-ship.png';
             const newPirate = new Pirate(this.gameScreen, 80, 150, imgSrc);  
             this.pirates.push(newPirate);
         }
@@ -273,10 +280,9 @@ class Game {
             this.removeElement(this.cargos, i);
         }
         this.sunElement.remove();                       //Remove the Sun
-        this.timerAreaElement.remove();                 //Remove the Timer
     }
 
-    gameOverScreen(){
+    gameOverScreen(gameResult){
         this.sunElement.remove();                       //Remove the Sun
         
         //Stop the sea movement once Ship is docked
@@ -297,7 +303,6 @@ class Game {
             this.ratingInfoElement.textContent  = "Mission completed, but with low rewards. There's potential for a higher score!";
         }  
 
-        
         let stars = document.querySelectorAll('.star');
         stars.forEach(star => {
             if (star.getAttribute('data-value') <= rating) {
@@ -306,5 +311,47 @@ class Game {
                 star.classList.remove('highlighted');
             }
         });
+
+        this.showLeaderboard(gameResult);
+    }
+
+    showLeaderboard(gameResult){
+        //Fetch the past top scorers
+        let topPlayers = JSON.parse(localStorage.getItem(`top-captains-${this.gameLevel}`));
+        topPlayers     = topPlayers ? topPlayers : [];
+
+        //Show the User score if WON
+        if (gameResult === 'WON'){    
+            let finalScoreElement = document.querySelector('#final-score');
+            finalScoreElement.textContent       = `'${(60 - this.timerCount)}s'`;
+
+            let currPlayer = {name: this.playerName,
+                score: (60 - this.timerCount)};
+
+            topPlayers.push(currPlayer);
+        }        
+        
+        if (topPlayers.length > 0){
+            const leaderboardElement            = document.querySelector('#leaderboard-area');
+            leaderboardElement.style.display    = 'block';
+            this.gameEndScreen.style.height     = '50vh'
+            this.gameEndScreen.style.minHeight  = '455px';
+            
+            topPlayers.sort((a, b) => {
+                return a.score - b.score
+            });
+
+            topPlayers = topPlayers.slice(0, 3);    //Take the top 3 players & discard the rest
+
+            topPlayers.forEach((topperElement, index) => {
+                let nameElement         = document.querySelector(`#name${index + 1}`);
+                nameElement.textContent = topperElement.name;
+
+                let scoreElement        = document.querySelector(`#score${index + 1}`);
+                scoreElement.textContent= topperElement.score + 's';
+            });
+
+            localStorage.setItem(`top-captains-${this.gameLevel}`, JSON.stringify(topPlayers));
+        }
     }
 }

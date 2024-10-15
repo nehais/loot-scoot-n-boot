@@ -15,7 +15,7 @@ class Port{
         this.element.style.top      = `${this.top}px`;
         this.element.style.width    = `${width}px`;
         this.element.style.height   = `${height}px`;        
-        this.element.src            = '../images/port.png'; 
+        this.element.src            = 'images/port.png'; 
         this.element.style.position = "absolute";
         
         this.gameScreen.appendChild(this.element);

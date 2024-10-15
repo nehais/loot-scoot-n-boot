@@ -29,7 +29,7 @@ class Player{
         
         this.elementCargo                   = document.createElement("div");
         this.elementCargo.id                = 'cargos'; 
-        this.elementCargo.style.backgroundImage  = `url('../images/cargos.png')`; 
+        this.elementCargo.style.backgroundImage  = `url('images/cargos.png')`; 
         this.elementCargo.style.position    = "absolute"; 
         this.elementCargo.style.backgroundRepeat = "no-repeat"; 
         this.elementCargo.style.backgroundSize   = "contain";
@@ -56,7 +56,7 @@ class Player{
         if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if (((newTop <= this.gameHeight) && (newTop >= 0)) && !this.gameTargetD){
+        if (((newTop <= this.gameHeight + 50) && (newTop >= 0)) && !this.gameTargetD){
             this.top = newTop;
         }
 
@@ -72,7 +72,7 @@ class Player{
                 //Increase Ship size & position it down to bring it up for Docking 
                 this.docking                = true;
                 
-                this.element.style.backgroundImage  = `url('../images/ship.png' )`; //Use no running Ship image
+                this.element.style.backgroundImage  = `url('images/ship.png' )`; //Use no running Ship image
                 this.element.style.backgroundImage
                 this.elementCargo.remove();
                 this.directionY             = -1;                   //Slow down to dock

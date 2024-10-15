@@ -37,6 +37,10 @@
                     <h3>Collision Damage : All Cargos</h3>
                 </div>
             </div>
+            <div id="player-name">
+                <label for="name">Welcome </label>
+                <input type="text" id="name" placeholder="Player Name">
+            </div>            
             <button id="start-button" class="game-buttons mouse-over">Start</button> 
             <button id="help-button" class="helper-button mouse-over">Help</button> 
         </div>
@@ -64,14 +68,25 @@
 
         <!-- #game-container is initially hidden using CSS style display: none -->
         <div id="game-container">
-            <div>        
+            <div id="game-left-area">
+                <div id="game-option1">
+                    <div id="timer-area">
+                        <div class="sun"><h3 id="timer1">60</h3></div>                    
+                    </div>              
+                    <div>
+                        <button class="new-game" class="mouse-over">New Game</button>
+                    </div>                
+                </div>   
+
                 <div id="stats"> 
-                    <h3>Collected Cargo Weight</h3>
-                    <div id="progress-area">
-                        <div id="progress">
-                            <div id="progressBar"></div>
+                    <div>
+                        <h3 id="stat-label">Collected Cargo Weight</h3>
+                        <div id="progress-area">
+                            <div id="progress">
+                                <div id="progressBar"></div>
+                            </div>
+                            <h3 id="target-info">0</h3>
                         </div>
-                        <h3 id="target-info">0</h3>
                     </div>
                     
                     <div id="missiles-area">
@@ -83,8 +98,7 @@
                             <img src="./images/missile.png" alt="" id="missile4" class="missile" data-value="4">
                             <img src="./images/missile.png" alt="" id="missile5" class="missile" data-value="5">
                         </div>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
 
@@ -95,14 +109,14 @@
 
                 <div class="overlay" id="overlay"></div>
                 <div class="popup" id="popup">
-                    Success! Target achieved. Docking the ship.
+                    Success! Target achieved.</br>Docking the ship.
                 </div>
 
                 <div id="sun-shine"></div>
                 
                 <!-- #game-end-modal is initially hidden using CSS style display: none -->
                 <div id="game-end-modal">
-                    <div id="final-score">40s</div>
+                    <div id="final-score"></div>
                     <div id="star-rating">
                         <span class="star" data-value="1">&#9733;</span>
                         <span class="star" data-value="2">&#9733;</span>
@@ -111,24 +125,30 @@
                     <div id="rating-info">
                         <p>Mission failed! Unfortunately, you couldn’t complete the objectives.</p>
                     </div>
-                    <div>
+                    <div id="leaderboard-area">
                         <h3 id="leaderboard">LEADERBOARD</h3>
                         <div id="top-scorers">    
-                            <div class="topper" top-value="1"><p id="name1">1. Neha</p><p id="score1">45s</p></div>    
-                            <div class="topper" top-value="2"><p id="name2">2. Arav</p><p id="score2">25s</p></div>          
-                            <div class="topper" top-value="3"><p id="name3">3. Kian</p><p id="score3">15s</p></div>
+                            <div class="topper" top-value="1"><p id="name1"></p><p id="score1"></p></div>    
+                            <div class="topper" top-value="2"><p id="name2"></p><p id="score2"></p></div>          
+                            <div class="topper" top-value="3"><p id="name3"></p><p id="score3"></p></div>
                         </div>
                     </div>
                     <div><button id="restart-button" class="mouse-over">Restart</button></div>                
                 </div>
+                <div id="controls">
+                    <button id="left">←</button>
+                    <button id="up">↑</button>
+                    <button id="right">→</button>
+                    <button id="down">↓</button>
+                </div>
             </div>
 
-            <div id="game-option">
+            <div id="game-option2">
                 <div id="timer-area">
-                    <div class="sun"><h3 id="timer">60</h3></div>                    
+                    <div class="sun"><h3 id="timer2">60</h3></div>                    
                 </div>              
                 <div>
-                    <button id="new-game" class="game-buttons mouse-over">New Game</button>
+                    <button class="new-game" class="mouse-over">New Game</button>
                 </div>                
             </div>
         </div>

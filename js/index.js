@@ -3,15 +3,18 @@ window.onload = function () {
     const helpScreen    = document.querySelector('#game-help');    
     const startButton   = document.getElementById("start-button");
     const restartButton = document.getElementById("restart-button");
-    const newButton     = document.getElementById("new-game");
+    const newButton     = document.querySelector(".new-game");
     const helpButton    = document.getElementById("help-button");
     const backButton    = document.getElementById("back-button");
     const level1        = document.getElementById("level1");
     const level2        = document.getElementById("level2");
     const level3        = document.getElementById("level3");
+    const playerNameEle = document.getElementById("name");
 
     let gameLevel;
     let scootGame;
+    let playerName      = localStorage.getItem("captain-name");
+    playerNameEle.value = playerName;
   
     //On game load initially set it on Level 1
     gameLevel = "LEVEL1";
@@ -45,7 +48,10 @@ window.onload = function () {
     });
   
     function startGame() {
-      scootGame = new Game(gameLevel);
+      playerName = playerNameEle.value ? playerNameEle.value : 'Captain NoClue';
+      localStorage.setItem("captain-name", playerName)
+
+      scootGame = new Game(gameLevel, playerName);
       scootGame.start();
     }
     

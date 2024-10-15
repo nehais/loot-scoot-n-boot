@@ -1,8 +1,8 @@
 class Cargo{
     constructor (gameScreen, width, height, top, left, weight){
         //Randomly select the Cargo
-        const orgCargo = "../images/containers/orange-cont-r.png";
-        const yelCargo = "../images/containers/yellow-cont-r.png";
+        const orgCargo = "images/containers/orange-cont-r.png";
+        const yelCargo = "images/containers/yellow-cont-r.png";
         const allCargo  = [orgCargo, yelCargo]
         const cargoIdx  = Math.floor(Math.random() * allCargo.length);
 

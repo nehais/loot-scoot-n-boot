@@ -2,7 +2,9 @@ body{
   background-color: #92e5e8;  
   background-image: url(../images/game-back.jpg);
   background-repeat:no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  margin: auto;
 }
 
 #game-intro {
@@ -35,13 +37,10 @@ body{
   }
 }
 
-#missile-logo{
-  height: 4vh;
-}
-
 #levels{
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .level-class{
@@ -51,7 +50,7 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   padding: 10px;
   text-align: center;
-  margin-right: 35px;
+  margin: 15px;
 
   div{
     background-color: rgba(213, 67, 18, 0.375);
@@ -72,6 +71,18 @@ body{
   background-color: rgba(32, 71, 83, 0.7) ;
 }
 
+#player-name{
+  margin-top: 30px;
+  font-size: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#name{
+  font-size: 1em;
+  line-height: 0.1em;
+}
 .mouse-over:hover{
   transform: scale(1.2);
   transition: transform 0.5s ease-in-out;
@@ -83,7 +94,7 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
   font-size: 1.8em;
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 10px 30px;
 }
 
@@ -100,11 +111,14 @@ body{
   border-radius: 5px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   padding: 10px;
-  margin: 20px 50px 50px 50px;
+  margin: 20px 20px 20px 20px;
 
   h2{
     background-color: rgba(213, 67, 18, 0.375);
     color: white;
+  }
+  h3{
+    font-size: 1.6vh;
   }
 }
 
@@ -114,7 +128,7 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
   font-size: 1em;
-  margin-top: 50px;
+  margin-top: 25px;
   padding: 10px 30px;
 }
 
@@ -123,10 +137,10 @@ body{
   border: solid 4px rgb(21, 58, 118);
   border-radius: 5px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  font-size: 1.4em;
+  font-size: 1.4vh;
   padding: 10px;
   margin: 30px;
-  width: 600px;
+  width: 30vh;
 
   letter-spacing: .15em; /* Adjust as needed */
   animation: blink-caret .75s step-end infinite;
@@ -140,7 +154,7 @@ body{
 
 #game-container {
   display: none;
-  padding: 20px 0px;
+  margin: 10px 0px;
   justify-content: center;  
 }
 
@@ -148,12 +162,16 @@ body{
   display: flex;
   justify-content: center;
   padding: 20px 0px;
-  width: 30vw;
-  height: 40vw;
+  width: 70vh;
+  height: 90vh;
+  min-width: 315px;
+  min-height: 500px;
   overflow: hidden;
   position: relative;
   background-image: url(../images/sea.jpg);
   background-size: cover;
+  border-radius: 2px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 @keyframes slide {
@@ -178,14 +196,27 @@ body{
   color: rgb(221, 228, 18);
 }
 
+#game-left-area{
+  margin-right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 #stats{
   text-align: center;
-  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   
-  p{
-    margin-top: 30px;
-    font-size: 1.3em;
+  h3{
+    font-size: 1.8vh;
   }
+}
+
+#stat-label{
+  margin: 30px 0 5px 0;
 }
 
 #progress-area{
@@ -213,8 +244,7 @@ body{
 
 #target-info{
   color:  #2d8e30;
-  font-size: 1.2em;
-  padding-bottom: 2px;
+  margin-left: 5px;
 }
 
 #missiles-area{
@@ -229,7 +259,7 @@ body{
 }
 
 .missile{
-  height: 50px;
+  height: 5vh;
   margin-right: 5px;
 }
 
@@ -299,42 +329,46 @@ body{
   }
 }
 
-#game-option{
+#game-option2{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
 
+#game-option1{
+  display: none;
+}
+
 #timer-area{
   display: flex;
   align-items: center;
-  font-size: 2em;
 }
 
 .sun{
-  width: 80px;
-  height: 80px;
+  width: 5vh;
+  height: 5vh;
   background-color: rgba(255, 221, 0, 0.38);
   border-radius: 50%;
-  margin: 20px 20px 0 50px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#timer{
+#timer1, #timer2{
   text-align: center;
-  font-size: 1.3em;
+  font-size: 3vh;
 }
 
-#new-game{
+.new-game{
   background-color: #d1150e8b;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
-  font-size: 1em;
-  margin-left: 50px;
+  font-size: 1.5vh;
+  margin-left: 15px;
+  margin-top: 10px;
   padding: 10px;
 }
 
@@ -347,13 +381,15 @@ body{
   align-items:center;
   
   color: white;
-  font-size: 1.3em;
+  font-size: 2.5vh;
   text-align: center;
   
-  width: 35vh;
-  height: 55vh;
+  width: 30vh;
+  height: 56vh;
+  min-width: 290px;
+  min-height: 200px;
   max-width: 500px;
-  max-height: 550px;
+  max-height: 850px;
   
   background-color: #034152cc;
   border: solid 2px rgb(21, 58, 118);
@@ -370,7 +406,7 @@ body{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   color: #fffac2;
   font-size: 1em;
-  margin-top: 50px;
+  margin-top: 10px;
   padding: 10px 30px;
 }
 
@@ -387,6 +423,10 @@ body{
 
 .highlighted {
   color: gold;
+}
+
+#leaderboard-area{
+  display: none;
 }
 
 #leaderboard{
@@ -410,15 +450,16 @@ body{
 
 /* Basic styles for the popup */
 .popup {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  left: 52%; /* Center the popup */
-  top: 50%; /* Center the popup */
-  transform: translate(-50%, -50%); /* Offset to center */
+  display: none; 
+  position: fixed; 
+  left: 52%; 
+  top: 50%; 
+  transform: translate(-50%, -50%); 
   padding: 20px;
-  background-color: #4c95af99; /* Green background */
-  color: rgb(197, 210, 216); /* White text */
+  background-color: #4c95af99; 
+  color: rgb(197, 210, 216);
   font-size: 1.5em;
+  text-align: center;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
   z-index: 5000; /* Sit on top */
@@ -434,4 +475,97 @@ body{
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   z-index: 999; /* Sit behind the popup */
+}
+
+#controls{
+  display: none;
+}
+
+@media screen and (max-device-width: 768px) {
+  #game-option2{
+    display: none;
+  }
+
+  #game-option1{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .new-game{
+    margin-left: 0px;
+  }
+
+  #controls {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+  
+  #controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-device-width: 425px) {  
+  #logo-img{
+    margin: 10px;
+    width: 10vh;
+  }
+
+  #levels{
+    flex-direction: column;
+  }
+
+  .level-class{
+    margin: 25px 0 0 0;
+  }
+
+  #game-container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+  }
+
+  #game-screen{
+    width: 5vw;
+    height: 8vh;
+  }
+  
+  #game-left-area{
+    margin: 0;
+    flex-direction: row;
+    transform: scale(0.75);
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  #game-option1 {
+    justify-content: center;
+  }
+
+  #stats{
+    margin-left: 100px;
+  } 
+
+  #stat-label {
+    margin: 0;
+  }
+}
+
+@media screen and (max-device-width: 768px) and (min-width: 426px) {
+  #game-left-area{
+    margin-left: 25px;
+  }
+
+  #game-screen {
+    margin-right: 25px;
+  }
 }
