@@ -147,15 +147,15 @@ class Game {
     gameLoop (){
         this.update();
         
-        if (this.gameTargetD) {
-            //Player achieved the Cargo Target
-            this.gameTargetDone();                  
-
-            if(this.player.docked){                 
-                this.gameOverScreen('WON');
-                this.money.play();                
-                clearInterval(this.gameIntervalId);
-            }
+        //Make sure Game Target action is done just once player.gameTargetD boolean
+        if (this.gameTargetD && !this.player.gameTargetD) {
+            //Player achieved the Cargo Target. Start the Target Routine
+            this.gameTargetRoutine();
+        }
+        if(this.player.docked){                   
+            clearInterval(this.gameIntervalId);              
+            this.gameOverScreen('WON');
+            this.money.play();
         }
     }
 
@@ -182,6 +182,12 @@ class Game {
     handleObstacleMove (obstacles, obstacleType, collisionSound){
         for (let i=0 ; i<obstacles.length ; i++){
             obstacles[i].move();
+
+            if (this.player.gameTargetD){
+                //Player Target achived so just obstacles sway away. 
+                //No action on collision anymore.
+                return; 
+            }
 
             const obstacleCollidedPlayer = this.player.didCollide(obstacles[i]);
             if (obstacleCollidedPlayer){                //Player collided with Cargo or Pirate
@@ -262,23 +268,19 @@ class Game {
         }
     }
 
-    gameTargetDone(){
-        document.getElementById('popup').style.display = 'block'; // Show the popup
+    gameTargetRoutine(){
+        this.player.gameTargetD = true;
+        document.getElementById('popup').style.display = 'block';   // Show the popup
         document.getElementById('overlay').style.display = 'block'; // Show the overlay
         const sec3TimeOut = setTimeout (()=>{
-            document.getElementById('popup').style.display = 'none'; // Hide the popup
-            document.getElementById('overlay').style.display = 'none'; // Hide the overlay
-            clearTimeout(sec3TimeOut);
-        }, 4000);
+        document.getElementById('popup').style.display = 'none';    // Hide the popup
+        document.getElementById('overlay').style.display = 'none';  // Hide the overlay
+        clearTimeout(sec3TimeOut);
+        }, 3000);
 
         clearInterval(this.counterIntervalId);          //Stop the game timer
         clearInterval(this.cargoIntervalId);            //No new Cargos should be created
         
-        this.player.gameTargetD = true;
-        if (this.port){
-            return;
-        }
-
         this.port = new Port(this.gameScreen, this.width, 700);  
         this.horn.play();                               //Play horn to indicate Game ended
 
