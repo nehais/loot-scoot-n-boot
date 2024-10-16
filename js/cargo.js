@@ -11,7 +11,7 @@ class Cargo{
         const speedIdx  = Math.floor(Math.random() * speedY.length);
         
         //Randomly select the Cargo start Location
-        const leftLoc   = [85, 170, 195, 250, 280, 325, 375, 400, 430];
+        const leftLoc   = [80, 170, 195, 250, 280, 50, 295, 310, 300, 35, 305];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
 
         //Randomly select the Cargo sway speed
