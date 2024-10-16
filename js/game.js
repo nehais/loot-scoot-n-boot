@@ -43,6 +43,7 @@ class Game {
         this.sink   = new Audio('sounds/sink.wav');
         this.steal  = new Audio('sounds/steal.flac');
         this.shoot  = new Audio('sounds/shoot.wav');
+        this.waves  = new Audio('sounds/waves.wav');
         this.setLevelParameters();
     }
 
@@ -78,7 +79,10 @@ class Game {
     start (){        
         this.startScreen.style.display  = "none";
         this.gameContainer.style.display= "flex";
-        this.gameScreen.style.display   = "flex";
+        this.gameScreen.style.display   = "flex";        
+        
+        //Remove the background image while playing for lesser distraction
+        document.body.style.backgroundImage = "linear-gradient(to bottom, #a0e3eb, white)";
 
         //Get the screen size
         this.height             = this.gameScreen.clientHeight;  //Play area height
@@ -168,6 +172,7 @@ class Game {
         // Create a new Pirate based on a random probability
         // when there is no other Pirate on the screen
         if (Math.random() > this.PIRATE_PROBABILITY_THRESHOLD && this.pirates.length < 1 && !this.gameTargetD) {
+            this.waves.play();
             let imgSrc  = 'images/pirate-ship.png';
             const newPirate = new Pirate(this.gameScreen, 80, 150, imgSrc);  
             this.pirates.push(newPirate);
