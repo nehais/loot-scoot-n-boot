@@ -100,6 +100,10 @@ body{
   padding: 10px 30px;
 }
 
+#help-button{
+  margin-left: 15px;
+}
+
 #game-help{
   align-items: center;
   display: none;
@@ -586,10 +590,6 @@ body{
     width: 10vh;
   }
 
-  #game-intro{
-    height: 80%;
-  }
-
   #levels{
     flex-direction: column;
   }
@@ -597,12 +597,31 @@ body{
   .level-class{
     margin: 10px 0 0 0;
     width: 90%;
+    padding: 0 10px;
     h2{
       font-size: 2vh;
     }
     h3{
       font-size: 1.5vh;
+      margin: 5px 0 2px 0;
     }
+  }
+
+  #player-name {
+    margin-top: 15px;
+  }
+
+  #name {
+    width: 140px;
+  }
+
+  #start-button{
+    font-size: 1em;
+    margin-top: 15px;
+  }
+  
+  #help-button{
+    margin-top: 15px;
   }
 
   #game-container{
