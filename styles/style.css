@@ -570,6 +570,14 @@ body{
     -ms-user-select: none;        /* Internet Explorer/Edge */
     user-select: none;            /* Non-prefixed version, supported by modern browsers */
   }
+
+  .sun{
+    margin-top: 0;
+  }
+
+  #stats h3{
+    font-size: 1.6vh;
+  }
 }
 
 @media screen and (max-device-width: 425px) {  
