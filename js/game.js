@@ -255,6 +255,10 @@ class Game {
             this.missilesCount           -= 1;
             const newMissile             = new Missile(this.gameScreen, 10, 20, this.player.top-20, this.player.left + 15);
             this.missiles.push(newMissile);
+            if(this.missilesCount === 0){
+                const missileOverElement = document.querySelector(`#missile-over`);
+                missileOverElement.style.display = "block";
+            }
         }
     }
 

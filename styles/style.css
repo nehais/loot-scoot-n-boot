@@ -1,4 +1,5 @@
 body{
+  background-color: #a0e3eb;
   background-image: url(../images/game-back.jpg);
   background-repeat:no-repeat;
   background-size:cover;
@@ -266,6 +267,10 @@ body{
 .missile{
   height: 5vh;
   margin-right: 5px;
+}
+
+#missile-over{
+  display: none;
 }
 
 .ship-rotate{
