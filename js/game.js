@@ -51,7 +51,7 @@ class Game {
         //Set the Game Parameters w.r.t the Level selected
         switch(this.gameLevel) {
             case "LEVEL1":
-              this.targetScore        = 50;
+              this.targetScore        = 250;
               this.pirateStealWeight  = 50;
               this.missilesCount      = 5;
               break;
@@ -61,7 +61,7 @@ class Game {
               this.missilesCount      = 3;
               break;            
             case "LEVEL3":
-              this.targetScore        = 10;
+              this.targetScore        = 750;
               this.pirateStealWeight  = 500000;
               this.missilesCount      = 2;
               break;
