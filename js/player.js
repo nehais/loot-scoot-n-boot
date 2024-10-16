@@ -14,7 +14,6 @@ class Player{
         this.directionY = 0;
         this.reduceY    = 0;
 
-        
         this.element                        = document.createElement("div");
         this.element.style.backgroundImage  = `url('${imgSrc}')`; 
         this.element.style.backgroundRepeat = "no-repeat"; 
@@ -52,11 +51,14 @@ class Player{
         let newLeft = this.left + this.directionX;
         let newTop  = this.top  + this.directionY;
 
-        //Check Player should not move out of the screen
+        //Check Player should not move out of the left/right screen
         if ((newLeft <= (this.gameWidth - this.width)) && (newLeft >= 0)){
             this.left = newLeft;
         }
-        if (((newTop <= this.gameHeight - 50) && (newTop >= 0)) && !this.gameTargetD){
+        //Check Player should not move out of the top/bottom screen 
+        //OR just move when docking. Port collision will stop the move.
+        if ((((newTop <= this.gameHeight - 50) && (newTop >= 0)) && !this.gameTargetD) || 
+            (this.docking)){
             this.top = newTop;
         }
 
@@ -64,35 +66,29 @@ class Player{
             //Game target achieved but the Ship docking has not started
             
             //Increase the speed of the ship to go off the screen
-            this.directionY = -4;                                   
+            this.directionY = -10;                                   
             this.rotatePlayer(0);
                 
             if (this.top <= -this.height){
                 //Ship is off screen
                 //Increase Ship size & position it down to bring it up for Docking 
                 this.docking                = true;
+                let scaleDockingShip        = 1.35;
+                if(this.gameWidth < 450){
+                    scaleDockingShip = 0.95;
+                }
                 
                 this.element.style.backgroundImage  = `url('images/ship.png' )`; //Use no running Ship image
                 this.element.style.backgroundImage
                 this.elementCargo.remove();
-                this.directionY             = -1;                   //Slow down to dock
-                this.left                   = 110;                  //Locking yard position
+                this.directionY             = -1;                       //Slow down to dock
+                this.left                   = this.gameWidth * 0.11;    //Locking yard position
                 this.top                    = this.gameHeight;
                 this.element.style.top      = `${this.gameHeight + (this.height * 1.8)}px`;
-                this.element.style.width    = `${this.width * 1.35}px`;
-                this.element.style.height   = `${this.height * 1.35}px`;
+                this.element.style.width    = `${this.width * scaleDockingShip}px`;
+                this.element.style.height   = `${this.height * scaleDockingShip}px`;
             }  
             this.top  += this.directionY;
-        }
-        if (this.docking){    
-            this.left                       = 130;
-            let newTop  = this.top  + this.directionY;    
-            if (((newTop >= 295))){
-                this.top = newTop;                                  //Move up to docking position
-            }
-            else{
-                this.docked = true;                                 //Ship docked
-            }
         }
 
         this.updatePosition();
@@ -107,12 +103,15 @@ class Player{
     didCollide(obstacle){
         const playerRect    = this.element.getBoundingClientRect();
         const obstacleRect  = obstacle.element.getBoundingClientRect();
-
+        let collisionClearance= 15
+        if (this.docking){
+            collisionClearance = this.gameHeight * 0.10;
+        }
         //Check if there is collision with the obstacle
         if (
             playerRect.left < (obstacleRect.right) &&
             playerRect.right > (obstacleRect.left) &&
-            playerRect.top < (obstacleRect.bottom-15) &&
+            playerRect.top < (obstacleRect.bottom-collisionClearance) &&
             playerRect.bottom > (obstacleRect.top-15)
           ) {
             return true;

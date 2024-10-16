@@ -1,6 +1,6 @@
 class Game {
     constructor (gameLevel, playerName){
-        this.CARGO_SPAWN_INTERVAL         = 2000;
+        this.CARGO_SPAWN_INTERVAL         = 1000;
         this.PIRATE_PROBABILITY_THRESHOLD = 0.98;
 
         this.pirateStealWeight  = 0;
@@ -167,6 +167,12 @@ class Game {
         this.handleObstacleMove (this.missiles, 'MISSILE', this.steal);
         if(this.port){
             this.port.move();
+            if(this.player.docking){
+                const playerDocked = this.player.didCollide(this.port);
+                if(playerDocked){
+                    this.player.docked = true;
+                }
+            }
         }
 
         // Create a new Pirate based on a random probability
@@ -273,15 +279,15 @@ class Game {
         document.getElementById('popup').style.display = 'block';   // Show the popup
         document.getElementById('overlay').style.display = 'block'; // Show the overlay
         const sec3TimeOut = setTimeout (()=>{
-        document.getElementById('popup').style.display = 'none';    // Hide the popup
-        document.getElementById('overlay').style.display = 'none';  // Hide the overlay
-        clearTimeout(sec3TimeOut);
+            document.getElementById('popup').style.display = 'none';    // Hide the popup
+            document.getElementById('overlay').style.display = 'none';  // Hide the overlay
+            clearTimeout(sec3TimeOut);
+            this.port = new Port(this.gameScreen, this.width + 10, this.height * 0.40);  
         }, 3000);
 
         clearInterval(this.counterIntervalId);          //Stop the game timer
         clearInterval(this.cargoIntervalId);            //No new Cargos should be created
         
-        this.port = new Port(this.gameScreen, this.width, 700);  
         this.horn.play();                               //Play horn to indicate Game ended
 
         for(let i=0 ; i<this.pirates.length ; i++){     //Remove the Pirate

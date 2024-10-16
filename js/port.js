@@ -11,6 +11,7 @@ class Port{
         //Create a Port Element
         this.element    = document.createElement("img");
 
+        this.element.style.zIndex   = 650;
         this.element.style.left     = `${this.left}px`;
         this.element.style.top      = `${this.top}px`;
         this.element.style.width    = `${width}px`;
