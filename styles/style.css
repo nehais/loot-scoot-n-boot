@@ -23,7 +23,7 @@ body{
   top: 20vh;
   left: 100vh;
   scale: 1;
-  animation: blink-s 1.5s infinite
+  animation: blink-s 2.5s infinite
 }
 
 /* Blinking keyframes */
@@ -619,8 +619,16 @@ body{
     margin-top: 15px;
   }
   
-  #help-button{
+  .helper-button{
     margin-top: 15px;
+  }
+
+  #story {
+    margin: 10px 0 0 0;
+  }
+
+  #help-info {
+    margin: 10px;
   }
 
   #game-container{
