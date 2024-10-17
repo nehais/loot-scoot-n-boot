@@ -342,7 +342,7 @@ body{
       transform: scale(1); /* Original size */
   }
   100% {
-      transform: scale(0.65); /* Final scaled-down size */
+      transform: scale(0.45); /* Final scaled-down size */
   }
 }
 

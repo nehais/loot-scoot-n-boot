@@ -370,5 +370,8 @@ class Game {
 
             localStorage.setItem(`top-captains-${this.gameLevel}`, JSON.stringify(topPlayers));
         }
+        else{
+            this.gameEndScreen.style.height     = `${0}px`;     //CSS will then use the min-height as no leaderboard to show
+        }
     }
 }
