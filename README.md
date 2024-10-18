@@ -26,9 +26,9 @@ Click on the link to open the game in the browser.
 
 ## How to Play
 * Level selection: After loading, choose a difficulty level. The name field will auto-fill with the last player's name, or default to 'Captain NoClue' if none was entered.</br>
-    <img src="images/readMeImgs/game-intro.jpg" alt="Start Screen" width="400"/></br>
+    <img src="images/readMeImgs/game-intro-page.jpg" alt="Start Screen" width="400"/></br>
 * Help: Click the Help button on the start screen for instructions and game backstory.</br>
-    <img src="images/readMeImgs/game-help.jpg" alt="Help Page" width="400"/></br>
+    <img src="images/readMeImgs/game-help-page.jpg" alt="Help Page" width="400"/></br>
 * Countdown: After clicking Start, a 3-second countdown helps you adjust to the UI before gameplay begins.
 * Game Elements: 
     - Timer: A 60-second timer begins once the game starts along with a shrinking sun icon to show time decreasing.
