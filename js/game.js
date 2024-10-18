@@ -331,7 +331,12 @@ class Game {
         for(let i=0 ; i<this.cargos.length ; i++){      //Remove the Cargos
             this.removeElement(this.cargos, i);
         }
+        this.cargos = [];
         this.sunElement.remove();                       //Remove the Sun
+        if (this.island){                               //Remove the Island
+            this.island.element.remove();
+            this.island = null;
+        }
     }
 
     gameOverScreen(gameResult){

@@ -48,7 +48,7 @@ class Player{
             return; //Stuck on the island for 5sec
         }
 
-        //Move the player ship position values within the screen 
+        //Reduce the player speed once 1/2 target achieved 
         if ((this.directionY !== 0) && (this.directionY !== -1)){
             this.directionY -= this.reduceY;
         }
