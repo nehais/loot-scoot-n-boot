@@ -184,7 +184,7 @@ class Game {
             this.island.move();
             const playerCollided = this.player.didCollide(this.island);
             if(playerCollided){
-                this.sink.play();
+                this.sink.play();                               //Play island sink sound
                 this.player.stuck = true;
                 this.player.element.classList.add('obj-sway');
                 this.island.element.classList.add('sink');
