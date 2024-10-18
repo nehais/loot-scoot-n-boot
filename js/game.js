@@ -24,6 +24,7 @@ class Game {
         this.height             = 0;    //Play area height
         this.width              = 0;    //Play area width
         this.port               = null;
+        this.island             = null;
         this.pirates            = [];
         this.cargos             = [];
         this.missiles           = [];
@@ -44,6 +45,7 @@ class Game {
         this.steal  = new Audio('sounds/steal.flac');
         this.shoot  = new Audio('sounds/shoot.wav');
         this.waves  = new Audio('sounds/waves.wav');
+        this.waves.volume = 0.1;
         this.setLevelParameters();
     }
 
@@ -59,11 +61,14 @@ class Game {
               this.targetScore        = 500;
               this.pirateStealWeight  = 200;
               this.missilesCount      = 3;
+              this.createIsland(20000);
               break;            
             case "LEVEL3":
               this.targetScore        = 750;
               this.pirateStealWeight  = 500000;
               this.missilesCount      = 2;
+              this.createIsland(20000);
+              this.createIsland(40000);
               break;
         }
         this.targetInfoElement.textContent  = this.targetScore;
@@ -172,6 +177,36 @@ class Game {
                 if(playerDocked){
                     this.player.docked = true;
                 }
+            }
+        }
+
+        if(this.island && !this.player.stuck){
+            this.island.move();
+            const playerCollided = this.player.didCollide(this.island);
+            if(playerCollided){
+                this.sink.play();
+                this.player.stuck = true;
+                this.player.element.classList.add('obj-sway');
+                this.island.element.classList.add('sink');
+                //Position on island center
+                this.player.element.style.left  = `${this.island.left + (this.island.width/2)}px`;
+                this.player.element.style.top   = `${this.island.top + (this.island.height/2)}px`;
+                this.player.left  = this.island.left + (this.island.width/2);
+                this.player.top   = this.island.top + (this.island.height/2);
+
+                //Free the ship in 5 secs
+                const stuck5TimeOut = setTimeout (()=>{
+                    clearTimeout(stuck5TimeOut);
+                    this.islandCollision = false;
+                    this.player.stuck = false;
+                    this.player.element.classList.remove('obj-sway');
+                    this.island.element.remove();
+                    this.island = null;
+                }, 5000);
+            }
+
+            if (this.island.top > this.height){   //Check if Island moved out of the screen
+                this.island.element.remove();
             }
         }
 
@@ -373,5 +408,13 @@ class Game {
         else{
             this.gameEndScreen.style.height     = `${0}px`;     //CSS will then use the min-height as no leaderboard to show
         }
+    }
+
+    createIsland (islandCrTime){
+        const sec25TimeOut = setTimeout (()=>{
+            clearTimeout(sec25TimeOut);
+            this.waves.play();
+            this.island = new Island(this.gameScreen, this.width * 0.15, this.height * 0.15);  
+        }, islandCrTime);
     }
 }

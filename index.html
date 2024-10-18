@@ -22,21 +22,23 @@
                     <div><h2>BEGINNER</h2></div>
                     <h3>Cargo Target : 250</h3>
                     <h3>Ship Missiles : 5</h3>
-                    <h3>Collision Damage : 50 Cargos</h3>
+                    <h3>Pirate Collision : -50 Cargos</h3>
                 </div>
 
                 <div id="level2" class="level-class">
                     <div><h2>INTERMEDIATE</h2></div>
                     <h3>Cargo Target : 500</h3>
                     <h3>Ship Missiles : 3</h3>
-                    <h3>Collision Damage : 200 Cargos</h3>
+                    <h3>Islands : 1</h3>
+                    <h3>Pirate Collision : -200 Cargos</h3>
                 </div>
 
                 <div id="level3" class="level-class">
                     <div><h2>EXPERT</h2></div>
                     <h3>Cargo Target : 750</h3>
                     <h3>Ship Missiles : 2</h3>
-                    <h3>Collision Damage : All Cargos</h3>
+                    <h3>Islands : 2</h3>
+                    <h3>Pirate Collision : -All Cargos</h3>
                 </div>
             </div>
             <div id="player-name">
@@ -66,6 +68,7 @@
                 <h3>Colliding with a pirate ship has Collision Damage</h3>
                 <h3>Press the spacebar or shoot button to shoot down pirate ships.</h3>
                 <h3>Shooting down a pirate ship will reward you with a HUGE cargo.</h3>
+                <h3>If the ship collides with the island, it will be stuck for 5 seconds.</h3>
             </div>
             <button id="back-button" class="helper-button mouse-over">Back</button>  
         </div>
@@ -160,6 +163,7 @@
         </div>
     </main>
 
+    <script type="text/javascript" src="js/island.js"></script>
     <script type="text/javascript" src="js/port.js"></script>
     <script type="text/javascript" src="js/missile.js"></script>
     <script type="text/javascript" src="js/cargo.js"></script>

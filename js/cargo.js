@@ -11,7 +11,7 @@ class Cargo{
         const speedIdx  = Math.floor(Math.random() * speedY.length);
         
         //Randomly select the Cargo start Location
-        const leftLoc   = [80, 170, 195, 250, 280, 50, 295, 310, 300, 35, 305];
+        const leftLoc   = [0.16, 0.29, 0.48, 0.51, 0.70, 0.39, 0.62];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
 
         //Randomly select the Cargo sway speed
@@ -19,8 +19,9 @@ class Cargo{
         const topIdx    = Math.floor(Math.random() * topLoc.length);
 
         this.gameScreen = gameScreen;
-        //Create Cargo on Dead Pirate location or randomly bring it on Sea
-        this.left       = (left ? left : leftLoc[leftIdx]);
+        //Create Cargo on Dead Pirate location 
+        //or randomly bring it on Sea within the sceen
+        this.left       = (left ? left : gameScreen.clientWidth * leftLoc[leftIdx]);
         this.top        = (top ? top : -height);
         this.width      = width;
         this.height     = height;
@@ -38,8 +39,7 @@ class Cargo{
         this.element.style.width    = `${width}px`;
         this.element.style.height   = `${height}px`;
         this.element.style.position = "absolute";
-        this.element.classList.add('cargo-sway');
-        this.element.classList.add('cargo-pick');
+        this.element.classList.add('obj-sway');
 
         const wgt = (weight ? weight :  speedIdx * 10);
                     

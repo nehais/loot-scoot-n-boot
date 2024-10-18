@@ -1,7 +1,7 @@
 class Pirate{
     constructor (gameScreen, width, height, imgSrc){
         //Randomly select the Pirate ship start Location
-        const leftLoc   = [65, 150, 205, 225, 260, 190, 310, 300, 30, 85, 110];
+        const leftLoc   = [0.12, 0.25, 0.44, 0.56, 0.75, 0.33, 0.69, 0, 1];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
         
         //Randomly select the Pirate ship Speed
@@ -13,7 +13,8 @@ class Pirate{
         const weightIdx = Math.floor(Math.random() * weight.length);
         
         this.gameScreen = gameScreen;
-        this.left       = leftLoc[leftIdx];
+        //Within the screenwidth randomly position the Pirate
+        this.left       = gameScreen.clientWidth * leftLoc[leftIdx];
         this.top        = -height;
         this.width      = width;
         this.height     = height;

@@ -4,6 +4,7 @@ class Player{
         this.gameTargetD= false;
         this.docking    = false;
         this.docked     = false;
+        this.stuck      = false;
         this.left       = left;
         this.top        = top;
         this.width      = width;
@@ -43,6 +44,10 @@ class Player{
     }
 
     move(){        
+        if (this.stuck){
+            return; //Stuck on the island for 5sec
+        }
+
         //Move the player ship position values within the screen 
         if ((this.directionY !== 0) && (this.directionY !== -1)){
             this.directionY -= this.reduceY;

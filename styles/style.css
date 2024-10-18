@@ -74,6 +74,11 @@ body{
   transition: transform ease-in-out;
 }
 
+.sink{
+  transform: scale(0);
+  transition: transform 7s ease-in-out;
+}
+
 .level-class:hover{
   background-color: rgba(32, 71, 83, 0.7) ;
 }
@@ -302,7 +307,7 @@ body{
   transform : skewX(45deg);
 }
 
-.cargo-sway{
+.obj-sway{
   animation: sway 5s;
   animation-iteration-count: infinite;
 }
@@ -514,6 +519,11 @@ body{
     margin-left: 0px;
   }
 
+  #start-button{
+    font-size: 1em;
+    margin-top: 15px;
+  }
+
   #controls {
     position: fixed;
     bottom: 10px;
@@ -625,11 +635,6 @@ body{
   #name {
     width: 140px;
   }
-
-  #start-button{
-    font-size: 1em;
-    margin-top: 15px;
-  }
   
   .helper-button{
     margin-top: 15px;
@@ -691,5 +696,14 @@ body{
   #sun-shine {
     width: 60px;
     height: 60px;
+  }
+
+  .level-class{
+    h2{
+      font-size: 2.1vh;
+    }
+    h3{
+      font-size: 1.6vh;
+    }
   }
 }
