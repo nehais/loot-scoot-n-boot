@@ -1,4 +1,6 @@
 window.onload = function () {
+    window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
+    
     const startScreen   = document.querySelector('#game-intro');
     const helpScreen    = document.querySelector('#game-help');    
     const startButton   = document.getElementById("start-button");
