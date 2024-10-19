@@ -1,7 +1,7 @@
 class Pirate{
     constructor (gameScreen, width, height, imgSrc){
         //Randomly select the Pirate ship start Location
-        const leftLoc   = [0.12, 0.25, 0.44, 0.56, 0.75, 0.33, 0.69, 0, 1];
+        const leftLoc   = [0.25, 0.44, 0.56, 0.33, 0.65, 0, 1];
         const leftIdx   = Math.floor(Math.random() * leftLoc.length);
         
         //Randomly select the Pirate ship Speed

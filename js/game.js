@@ -35,6 +35,7 @@ class Game {
         this.gameIntervalId     = null;
         this.cargoIntervalId    = null;
         this.counterIntervalId  = null;
+        this.islandIntervals     = [];
         this.gameLoopFrecuency  = Math.round(1000/60);
         
         this.gameScreen.style.position = "relative";
@@ -289,6 +290,9 @@ class Game {
         if (progressPercent >= 50){
             this.player.reduceY = 0.15;
         }
+        else{
+            this.player.reduceY = 0;
+        }
         if (progressPercent >= 100){
             this.gameTargetD = true;
         }
@@ -337,6 +341,7 @@ class Game {
             this.island.element.remove();
             this.island = null;
         }
+        this.islandIntervals.forEach(interval => clearTimeout(interval));
     }
 
     gameOverScreen(gameResult){
@@ -416,10 +421,12 @@ class Game {
     }
 
     createIsland (islandCrTime){
-        const sec25TimeOut = setTimeout (()=>{
-            clearTimeout(sec25TimeOut);
+        const secIslandTimeOut = setTimeout (()=>{
+            clearTimeout(secIslandTimeOut);
             this.waves.play();
             this.island = new Island(this.gameScreen, this.width * 0.15, this.height * 0.15);  
         }, islandCrTime);
+
+        this.islandIntervals.push(secIslandTimeOut);
     }
 }

@@ -62,7 +62,7 @@ class Player{
         }
         //Check Player should not move out of the top/bottom screen 
         //OR just move when docking. Port collision will stop the move.
-        if ((((newTop <= this.gameHeight - 50) && (newTop >= 0)) && !this.gameTargetD) || 
+        if ((((newTop <= this.gameHeight - 100) && (newTop >= 0)) && !this.gameTargetD) || 
             (this.docking)){
             this.top = newTop;
         }
@@ -94,6 +94,9 @@ class Player{
                 this.element.style.height   = `${this.height * scaleDockingShip}px`;
             }  
             this.top  += this.directionY;
+        }
+        if (this.docking){
+            this.left                   = this.gameWidth * 0.11;    //Locking yard position
         }
 
         this.updatePosition();
